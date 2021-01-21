@@ -14,6 +14,7 @@ public class find_id extends AppCompatActivity {
     EditText academy_name, name;
     Button check;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
