@@ -12,6 +12,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디"/>
+
         <EditText
             android:id="@+id/academy_name"
             android:layout_width="wrap_content"
