@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class login extends AppCompatActivity {
-
     EditText id, password;
     Button login;
     TextView find_id, find_password;
@@ -49,9 +48,6 @@ public class login extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
 

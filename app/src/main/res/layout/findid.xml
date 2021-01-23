@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_margin="30dp"
     android:orientation="vertical">
 
 
@@ -11,26 +12,29 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="아이디"/>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="아이디 찾기"/>
 
         <EditText
             android:id="@+id/academy_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:hint="학원/교습소 이름 입력" />
 
         <EditText
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:hint="이름을 입력하세요" />
+            android:hint="이름 입력" />
 
         <Button
             android:id="@+id/check"
@@ -38,29 +42,39 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_button"
             android:text="아이디 찾기"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             app:backgroundTint="#A3A1A1"
             app:rippleColor="#9F8E8E" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:text="비밀번호 재설정"/>
 
         <EditText
             android:id="@+id/find_email"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:layout_marginLeft="10dp"
-            android:hint="이메일 입력" />
+            android:hint="이메일(아이디) 입력" />
 
         <Button
             android:id="@+id/pw_check"
@@ -68,6 +82,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_button"
             android:text="비밀번호 찾기"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             app:backgroundTint="#A3A1A1"
             app:rippleColor="#9F8E8E" />
         </LinearLayout>
