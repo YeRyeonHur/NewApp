@@ -1,4 +1,4 @@
-package com.example.newapp;
+package com.example.newapp.sign;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import com.example.newapp.R;
 
 public class find_id extends AppCompatActivity {
     //아이디찾기

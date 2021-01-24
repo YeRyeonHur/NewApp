@@ -1,4 +1,4 @@
-package com.example.newapp;
+package com.example.newapp.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.newapp.R;
 
 public class login extends AppCompatActivity {
     EditText id, password;
@@ -37,7 +39,7 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //아이디 찾기 화면으로 넘어감
-                Intent intent = new Intent(login.this, find_id.class); //this 대신 getActivity()
+                Intent intent = new Intent(login.this, com.example.newapp.sign.find_id.class); //this 대신 getActivity()
                 startActivity(intent);
             }
         });
