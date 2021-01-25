@@ -2,8 +2,12 @@ package com.example.newapp.listview;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,8 +21,13 @@ import java.util.ArrayList;
 public class studentList extends AppCompatActivity {
     private ListView listview;
     private MyAdapter adapter;
+    private EditText editTextFilter;
+    private Button searchbtn;
 
     ArrayList<Students> studentlist=MyAdapter.studentlist;
+
+    public studentList() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,32 @@ public class studentList extends AppCompatActivity {
         setContentView(R.layout.listview);
 
         CreateView();
+
+        // filtering
+        editTextFilter=(EditText)findViewById(R.id.edittxt);
+        editTextFilter.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String filterText=s.toString();
+                if(filterText.length()>0){
+                    listview.setFilterText(filterText);
+                }
+                else{
+                    listview.clearTextFilter();
+                }
+            }
+        });
 
         // listview에 꾹 눌렀을 때 이벤트 정의 ==> 삭제 기능
         listview.setOnItemLongClickListener((new AdapterView.OnItemLongClickListener() {
