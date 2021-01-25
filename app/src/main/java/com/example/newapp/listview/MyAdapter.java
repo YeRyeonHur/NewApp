@@ -1,4 +1,4 @@
-package com.example.newapp;
+package com.example.newapp.listview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.newapp.R;
 import com.example.newapp.database.Students;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -59,6 +62,7 @@ public class MyAdapter extends BaseAdapter {
         TextView nameText=(TextView)convertView.findViewById(R.id.Name);
         TextView ageText=(TextView)convertView.findViewById(R.id.Age);
         TextView phoneText=(TextView)convertView.findViewById(R.id.Phone);
+        TextView dateText=(TextView)convertView.findViewById(R.id.date);
 
         // position에 위치한 데이터 참조 획득
         Students students=studentlist.get(position);
@@ -66,6 +70,7 @@ public class MyAdapter extends BaseAdapter {
         nameText.setText("이름: "+ students.getName());
         ageText.setText("나이: "+students.getAge());
         phoneText.setText("핸드폰: "+students.getPhone());
+        dateText.setText("결제 날짜: "+students.getDate());
 
         return convertView;
     }

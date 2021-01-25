@@ -1,17 +1,15 @@
-package com.example.newapp;
+package com.example.newapp.listview;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newapp.R;
 import com.example.newapp.database.Students;
 
 import java.util.ArrayList;
