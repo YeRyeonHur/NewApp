@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewApp">
-        <activity android:name="com.example.newapp.sign.find_id">
+
+        <activity android:name="com.example.newapp.info.add_std">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +21,7 @@
         <activity android:name="com.example.newapp.sign.login"></activity>
         <activity android:name="com.example.newapp.sign.Register"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name="com.example.newapp.sign.find_id"></activity>
 
     </application>
 

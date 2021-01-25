@@ -4,6 +4,7 @@ import io.realm.RealmObject;
 
 public class Students extends RealmObject {
     private String name, phone, date;
+    private int mon, tue, wed, thu, fri, sat, sun;
     private int age; //결제 날짜
 
     public Students(String name, int age, String phone, String date){
@@ -11,6 +12,9 @@ public class Students extends RealmObject {
         this.age=age;
         this.phone=phone;
         this.date=date;
+    }
+
+    public Students(){
     }
 
     public String getName(){
