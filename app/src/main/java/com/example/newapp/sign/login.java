@@ -24,7 +24,6 @@ public class login extends AppCompatActivity {
         password = findViewById(R.id.password);
         login = findViewById(R.id.login_button);
         find_id = findViewById(R.id.find_id);
-        find_password=findViewById(R.id.find_password);
 
         //로그인 버튼 리스너
         login.setOnClickListener(new View.OnClickListener() {
@@ -44,12 +43,7 @@ public class login extends AppCompatActivity {
             }
         });
 
-        find_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
 
 

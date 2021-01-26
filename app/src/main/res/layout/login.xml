@@ -54,21 +54,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아이디 찾기"
+                android:text="아이디 찾기/비밀번호 재설정"
                 android:clickable="true"
                 android:id="@+id/find_id"/>
-            <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" | "/>
-
-            <TextView
-                android:id="@+id/find_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 찾기"
-                android:clickable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

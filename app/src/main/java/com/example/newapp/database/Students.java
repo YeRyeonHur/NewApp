@@ -30,4 +30,3 @@ public class Students extends RealmObject {
         return date;
     }
 }
-
