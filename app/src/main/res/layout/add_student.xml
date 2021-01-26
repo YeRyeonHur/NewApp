@@ -280,7 +280,7 @@
                 android:layout_weight="5"
                 android:id="@+id/add_par_name"/>
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -310,20 +310,37 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:text="결제일 : "/>
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:id="@+id/add_pay_add"
-                android:inputType="phone"
-                android:textSize="18dp"
-                android:text="매달 -- 일"
-                android:maxLength="13"
-                android:clickable="true"
-                android:onClick="clicked_pay"/>
+                android:layout_weight="5">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textSize="18dp"
+                    android:text=" 매달"
+                    android:maxLength="13"/>
+
+                <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:gravity="center"
+                    android:maxLength="2"/>
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textSize="18dp"
+                    android:text="일"
+                    android:maxLength="13"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
