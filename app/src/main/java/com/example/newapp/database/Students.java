@@ -6,7 +6,7 @@ public class Students extends RealmObject {
     private String name, phone;
     int date;
     private int mon, tue, wed, thu, fri, sat, sun;
-    private int age; //결제 날짜
+    private int age;
     private String par_name, par_phone;
     private String memo;
 

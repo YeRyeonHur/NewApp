@@ -2,6 +2,7 @@ package com.example.newapp.info;
 
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -17,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
+import com.example.newapp.listview.MyAdapter;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,6 +40,7 @@ public class add_std extends AppCompatActivity {
         par_phone = findViewById(R.id.add_par_phone);
         std_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         par_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
     }
 
     //등원 시간 설정 메소드
@@ -153,7 +157,7 @@ public class add_std extends AppCompatActivity {
         Students students = new Students();
         Realm realm;
 
-        Realm.init(this);
+        //Realm.init(this);
         realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
