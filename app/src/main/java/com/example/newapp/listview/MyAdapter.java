@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 
-public class MyAdapter extends BaseAdapter {
+public class MyAdapter extends BaseAdapter implements Filterable{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<Students> studentlist;
+    private ArrayList<Students> studentlist, filteredItemList;
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
 
@@ -47,11 +49,6 @@ public class MyAdapter extends BaseAdapter {
         return position;
     }
 
-    //아이템 데이터 추가를 위한 함수
-    public void addItem(String name, int age, String phone, int date){
-        Students students=new Students(name, age, phone, date);
-        studentlist.add(students);
-    }
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View 리턴
     @Override
@@ -79,5 +76,53 @@ public class MyAdapter extends BaseAdapter {
         dateText.setText("결제 날짜: "+students.getDate());
 
         return convertView;
+    }
+
+    Filter listfilter;
+    @Override
+    public Filter getFilter() {
+        if(listfilter==null){
+            listfilter=new ListFilter();
+        }
+        return listfilter;
+    }
+
+    private class ListFilter extends Filter{
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults() ;
+
+            if (constraint == null || constraint.length() == 0) {
+                results.values = studentlist ;
+                results.count = studentlist.size() ;
+            } else {
+                ArrayList<Students> itemList = new ArrayList<Students>() ;
+
+                for (Students item : studentlist) {
+                    if (item.getName().toUpperCase().contains(constraint.toString().toUpperCase()))
+                    {
+                        itemList.add(item) ;
+                    }
+                }
+
+                results.values = itemList ;
+                results.count = itemList.size() ;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            // update listview by filtered data list.
+            filteredItemList = (ArrayList<Students>) results.values ;
+
+            // notify
+            if (results.count > 0) {
+                notifyDataSetChanged() ;
+            } else {
+                notifyDataSetInvalidated() ;
+            }
+        }
     }
 }

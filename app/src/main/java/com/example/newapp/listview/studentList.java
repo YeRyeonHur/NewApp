@@ -22,12 +22,13 @@ import com.example.newapp.calendar_page.popup_activity;
 import com.example.newapp.database.Students;
 import com.example.newapp.info.add_std;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class studentList extends AppCompatActivity {
+public class studentList extends AppCompatActivity{
     private ListView listview;
     private MyAdapter adapter;
     private EditText editTextFilter;
@@ -35,6 +36,8 @@ public class studentList extends AppCompatActivity {
     private  Realm realm;
 
     private ArrayList<Students> studentlist;
+    private Students modified_student;
+    private int modified_position;
 
     public studentList() {
     }
@@ -67,12 +70,13 @@ public class studentList extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String filterText=s.toString();
-                if(filterText.length()>0){
+              /*  if(filterText.length()>0){
                     listview.setFilterText(filterText);
                 }
                 else{
                     listview.clearTextFilter();
-                }
+                }*/
+                ((MyAdapter)listview.getAdapter()).getFilter().filter(filterText);
             }
         });
 
@@ -83,35 +87,9 @@ public class studentList extends AppCompatActivity {
                 Students students=(Students)parent.getItemAtPosition(position);
                 TextView txtResult=(TextView)findViewById(R.id.txtText);
                 Intent intent=new Intent(getApplicationContext(), popup_activity.class);
-                String name=students.getName();
-                int age=students.getAge();
-                int date=students.getDate();
-                String parentname=students.getPar_name();
-                String parentphone=students.getPar_phone();
-                String memo=students.getMemo();
-                int mon=students.getMon();
-                int tue=students.getTue();
-                int wed=students.getWed();
-                int thu=students.getThu();
-                int fri=students.getFri();
-                int sat=students.getSat();
-                int sun=students.getSun();
+                String str=students.getInfo();
 
-                String day="";
-                if(mon!=-1){
-                    day=day+"월요일: "+mon;
-                }
-                if(tue!=-1) day=day+"화요일: "+tue;
-                if(wed!=-1) day=day+"수요일: "+wed;
-                if(thu!=-1) day=day+"목요일: "+thu;
-                if(fri!=-1) day=day+"금요일: "+fri;
-                if(sat!=-1) day=day+"토요일: "+sat;
-                if(sun!=-1) day=day+"일요일: "+sun;
-
-
-
-
-                intent.putExtra("data", "Test Popup");
+                intent.putExtra("Info", str);
                 startActivity(intent);
             }
         }));
@@ -120,7 +98,7 @@ public class studentList extends AppCompatActivity {
         listview.setOnItemLongClickListener((new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Students students=(Students)parent.getItemAtPosition(position);
+                modified_student=(Students)parent.getItemAtPosition(position);
                 AlertDialog.Builder builder=new AlertDialog.Builder(studentList.this);
                 AlertDialog alertDialog;
 
@@ -131,12 +109,9 @@ public class studentList extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent intent=new Intent(getApplicationContext(), add_std.class);
-                                        intent.putExtra("Student", (Parcelable) students);
-                                        startActivity(intent);
-                                        finish();
-
-                                        modify(students);
-                                        Toast.makeText(getApplicationContext(), "수정되었습니다.", Toast.LENGTH_SHORT).show();
+                                        intent.putExtra("Student", modified_student);
+                                        startActivityForResult(intent,1003);
+                                      //  modified_position=position;
                                     }
                                 });
                 builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
@@ -150,7 +125,7 @@ public class studentList extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        deleteData(students);
+                        deleteData(modified_student);
                         studentlist.remove(position);
                         Toast.makeText(getApplicationContext(),"삭제되었습니다.",Toast.LENGTH_SHORT).show();
                         adapter.notifyDataSetChanged();
@@ -165,7 +140,25 @@ public class studentList extends AppCompatActivity {
         }));
     }
 
-    private void CreateView(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1003:
+                if (resultCode == RESULT_OK) {
+                    readData();
+                    adapter.notifyDataSetChanged();
+                } else {
+
+                }
+                break;
+        }
+    }
+
+
+
+        private void CreateView(){
         //Adapter 생성
         adapter=new MyAdapter(this, studentlist);
 
@@ -177,6 +170,7 @@ public class studentList extends AppCompatActivity {
 
     //학생들 데이터 읽기
     private void readData(){
+        studentlist.clear();
         RealmResults<Students>results=realm.where(Students.class).findAll();
         studentlist.addAll(realm.copyFromRealm(results));
     }
@@ -194,7 +188,6 @@ public class studentList extends AppCompatActivity {
                 // 쿼리를 해서 하나를 가져온다.
                 Students std=realm.where(Students.class).equalTo("name",name).and().equalTo("age",age)
                         .and().equalTo("phone",phone).findFirst();
-
 
 
             }

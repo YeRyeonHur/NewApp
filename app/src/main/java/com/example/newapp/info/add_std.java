@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
 import com.example.newapp.listview.MyAdapter;
+import com.example.newapp.listview.studentList;
+
+import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -29,6 +32,12 @@ import io.realm.RealmResults;
 public class add_std extends AppCompatActivity {
 
     private EditText std_phone, par_phone;
+    private EditText std_name,std_age, payDate, par_name, memo;
+    private TextView day0,day1,day2,day3,day4,day5,day6;
+    private boolean Flag=false;
+    private  Intent intent;
+    private Students getstudent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,54 @@ public class add_std extends AppCompatActivity {
         std_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         par_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
+        Flag=false;
+
+        intent=getIntent();
+        getstudent= (Students) intent.getSerializableExtra("Student");
+        if(getstudent!=null){
+            preWrite(getstudent);
+            Flag=true;
+        }
+
+    }
+
+    private void preWrite(Students student){
+        std_name=findViewById(R.id.add_std_name);
+        std_age=findViewById(R.id.add_std_age);
+        payDate=findViewById(R.id.pay_date);
+        par_name=findViewById(R.id.add_par_name);
+        memo=findViewById(R.id.add_memo);
+        day0=findViewById(R.id.days_0);
+        day1=findViewById(R.id.days_1);
+        day2=findViewById(R.id.days_2);
+        day3=findViewById(R.id.days_3);
+        day4=findViewById(R.id.days_4);
+        day5=findViewById(R.id.days_5);
+        day6=findViewById(R.id.days_6);
+
+        std_name.setText(student.getName());
+        std_age.setText(Integer.toString(student.getAge()));
+        std_phone.setText(student.getPhone());
+        par_name.setText(student.getPar_name());
+        par_phone.setText(student.getPar_phone());
+        payDate.setText(Integer.toString(student.getDate()));
+        memo.setText(student.getMemo());
+
+        int mon=student.getMon();
+        int tue=student.getTue();
+        int wed=student.getWed();
+        int thu=student.getThu();
+        int fri=student.getFri();
+        int sat=student.getSat();
+        int sun=student.getSun();
+
+        if(mon!=-1) day0.setText(mon/100+":"+mon%100);
+        if(tue!=-1) day1.setText(tue/100+":"+tue%100);
+        if(wed!=-1) day2.setText(wed/100+":"+wed%100);
+        if(thu!=-1) day3.setText(thu/100+":"+thu%100);
+        if(fri!=-1) day4.setText(fri/100+":"+fri%100);
+        if(sat!=-1) day5.setText(sat/100+":"+sat%100);
+        if(sun!=-1) day6.setText(sun/100+":"+sun%100);
     }
 
     //등원 시간 설정 메소드
@@ -160,17 +217,37 @@ public class add_std extends AppCompatActivity {
         //Realm.init(this);
         realm = Realm.getDefaultInstance();
 
-        realm.beginTransaction();
-        students = realm.createObject(Students.class);
-        students.setStudent(name, phone, age);
-        students.setTime(mon, tue, wed, thu, fri, sat, sun);
-        students.setDate(pay_date);
-        students.setParent(par_name, par_phone);
-        students.setMemo(memo);
 
-        realm.commitTransaction();
         //RealmResults<Students> realmResults = realm.where(Students.class).findAll();
 
-        Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show();
+        if(Flag==false) {
+            realm.beginTransaction();
+            students = realm.createObject(Students.class);
+            students.setStudent(name, phone, age);
+            students.setTime(mon, tue, wed, thu, fri, sat, sun);
+            students.setDate(pay_date);
+            students.setParent(par_name, par_phone);
+            students.setMemo(memo);
+
+            realm.commitTransaction();
+            Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Flag=false;
+            realm.beginTransaction();
+                    // 쿼리를 해서 하나를 가져온다.
+                    Students std=realm.where(Students.class).equalTo("name",getstudent.getName()).and().equalTo("age",getstudent.getAge())
+                            .and().equalTo("phone",getstudent.getPhone()).findFirst();
+                    std.setStudent(name, phone, age);
+                    std.setTime(mon, tue, wed, thu, fri, sat, sun);
+                    std.setDate(pay_date);
+                    std.setParent(par_name, par_phone);
+                    std.setMemo(memo);
+
+               realm.commitTransaction();
+            Toast.makeText(getApplicationContext(),"수정되었습니다.",Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK,intent);
+            finish();
+        }
     }
 }
