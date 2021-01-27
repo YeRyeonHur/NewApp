@@ -41,8 +41,8 @@ public class realmData extends AppCompatActivity {
     }
 
     // 데이터베이스에서 이름으로 학생들 결제날짜 찾기
-    private String findData(Realm realm, String name){
-        String date; //결제날짜
+    private int findData(Realm realm, String name){
+        int date; //결제날짜
         Students student=realm.where(Students.class).equalTo("name",name).findFirst();
         date=student.getDate();
         return date;

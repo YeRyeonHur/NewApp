@@ -42,7 +42,7 @@ public class MyAdapter extends BaseAdapter {
     }
 
     //아이템 데이터 추가를 위한 함수
-    public void addItem(String name, int age, String phone, String date){
+    public void addItem(String name, int age, String phone, int date){
         Students students=new Students(name, age, phone, date);
         studentlist.add(students);
     }

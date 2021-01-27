@@ -11,11 +11,6 @@
         android:layout_height="wrap_content"
         android:textSize="22dp"
         android:text="학생 추가"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        android:layout_marginLeft="10dp"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -331,7 +326,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:gravity="center"
-                    android:maxLength="2"/>
+                    android:maxLength="2"
+                    android:id="@+id/pay_date"/>
 
                 <TextView
                     android:layout_width="20dp"
@@ -384,7 +380,8 @@
             android:layout_height="wrap_content"
             android:text="추가"
             android:layout_marginRight="5dp"
-            android:id="@+id/std_add_But" />
+            android:id="@+id/std_add_But"
+            android:onClick="save_info"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
