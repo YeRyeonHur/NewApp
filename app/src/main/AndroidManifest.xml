@@ -10,8 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewApp">
-
         <activity android:name="com.example.newapp.calendar_page.calendar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

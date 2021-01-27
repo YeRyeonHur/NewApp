@@ -3,6 +3,7 @@ package com.example.newapp.calendar_page;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +132,10 @@ public class calendar extends AppCompatActivity {
 
         today = mCal.get(Calendar.DAY_OF_MONTH);
 
+        PaintDrawable pd = new PaintDrawable(R.color.purple_200);
+        pd.setAlpha(70);
+
+        gridView.setSelector(pd);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -155,7 +160,8 @@ public class calendar extends AppCompatActivity {
                 }
                 String final_date =YEAR+'/'+MONTH+'/'+Day;
                 intent.putExtra("data",final_date);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
+                overridePendingTransition(0,0);
 
 
                 //Toast.makeText(getApplicationContext(), "test = " + day, Toast.LENGTH_SHORT).show();

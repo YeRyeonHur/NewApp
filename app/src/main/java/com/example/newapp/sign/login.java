@@ -14,7 +14,7 @@ import com.example.newapp.R;
 public class login extends AppCompatActivity {
     EditText id, password;
     Button login;
-    TextView find_id, find_password;
+    TextView find_id, find_password, join;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class login extends AppCompatActivity {
         password = findViewById(R.id.password);
         login = findViewById(R.id.login_button);
         find_id = findViewById(R.id.find_id);
-
+        join = findViewById(R.id.join);
         //로그인 버튼 리스너
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +39,15 @@ public class login extends AppCompatActivity {
             public void onClick(View v) {
                 //아이디 찾기 화면으로 넘어감
                 Intent intent = new Intent(login.this, com.example.newapp.sign.find_id.class); //this 대신 getActivity()
+                startActivity(intent);
+            }
+        });
+        //회원가입 눌렀을때 넘어가게
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //아이디 찾기 화면으로 넘어감
+                Intent intent = new Intent(login.this, com.example.newapp.sign.Register.class); //this 대신 getActivity()
                 startActivity(intent);
             }
         });
