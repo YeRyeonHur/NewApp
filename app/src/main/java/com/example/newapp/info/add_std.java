@@ -1,5 +1,6 @@
 package com.example.newapp.info;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newapp.MainActivity;
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
 import com.example.newapp.listview.MyAdapter;
@@ -47,6 +49,18 @@ public class add_std extends AppCompatActivity {
         //학생, 학부모 핸드폰번호 -> 하이픈 자동 추가
         std_phone = findViewById(R.id.add_std_phone);
         par_phone = findViewById(R.id.add_par_phone);
+        std_name=findViewById(R.id.add_std_name);
+        std_age=findViewById(R.id.add_std_age);
+        payDate=findViewById(R.id.pay_date);
+        par_name=findViewById(R.id.add_par_name);
+        memo=findViewById(R.id.add_memo);
+        day0=findViewById(R.id.days_0);
+        day1=findViewById(R.id.days_1);
+        day2=findViewById(R.id.days_2);
+        day3=findViewById(R.id.days_3);
+        day4=findViewById(R.id.days_4);
+        day5=findViewById(R.id.days_5);
+        day6=findViewById(R.id.days_6);
         std_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         par_phone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -62,6 +76,8 @@ public class add_std extends AppCompatActivity {
     }
 
     private void preWrite(Students student){
+        /*
+        --> onCreate메소드로 옮김
         std_name=findViewById(R.id.add_std_name);
         std_age=findViewById(R.id.add_std_age);
         payDate=findViewById(R.id.pay_date);
@@ -74,7 +90,7 @@ public class add_std extends AppCompatActivity {
         day4=findViewById(R.id.days_4);
         day5=findViewById(R.id.days_5);
         day6=findViewById(R.id.days_6);
-
+        */
         std_name.setText(student.getName());
         std_age.setText(Integer.toString(student.getAge()));
         std_phone.setText(student.getPhone());
@@ -103,6 +119,12 @@ public class add_std extends AppCompatActivity {
     //등원 시간 설정 메소드
     public void clicked_days(View v){
         TimePickerDialog timePicker;
+        TextView tv_tmp = (TextView) v;
+        String[] time_tmp = tv_tmp.getText().toString().split(":");
+        if(time_tmp[0].equals("--")){
+            time_tmp[0] = time_tmp[1] = "0";
+        }
+
         timePicker = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -110,7 +132,7 @@ public class add_std extends AppCompatActivity {
                 TextView tv = (TextView) v;
                 tv.setText(setTime);
             }
-        }, 00, 00, false);
+        }, Integer.parseInt(time_tmp[0]), Integer.parseInt(time_tmp[1]), false);
         timePicker.setButton(TimePickerDialog.BUTTON_NEGATIVE, "삭제", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -231,6 +253,26 @@ public class add_std extends AppCompatActivity {
 
             realm.commitTransaction();
             Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show();
+
+            //학생을 추가로 입력할것인가 묻는 팝업
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setMessage("학생을 더 추가하시겠습니까?");
+            alert.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    reset_edittext();
+                }
+            });
+            alert.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //메인으로 돌아감
+                    Intent intent = new Intent(add_std.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            alert.show();
         }
         else{
             Flag=false;
@@ -249,5 +291,23 @@ public class add_std extends AppCompatActivity {
             setResult(RESULT_OK,intent);
             finish();
         }
+    }
+
+    //모든 입력칸을 초기화
+    private void reset_edittext(){
+        std_name.setText("");
+        std_phone.setText("");
+        std_age.setText("");
+        payDate.setText("");
+        par_name.setText("");
+        par_phone.setText("");
+        memo.setText("");
+        day0.setText("--:--");
+        day1.setText("--:--");
+        day2.setText("--:--");
+        day3.setText("--:--");
+        day4.setText("--:--");
+        day5.setText("--:--");
+        day6.setText("--:--");
     }
 }
