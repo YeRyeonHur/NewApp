@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.example.newapp.info.add_std;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -69,14 +71,9 @@ public class studentList extends AppCompatActivity{
 
             @Override
             public void afterTextChanged(Editable s) {
-                String filterText=s.toString();
-              /*  if(filterText.length()>0){
-                    listview.setFilterText(filterText);
-                }
-                else{
-                    listview.clearTextFilter();
-                }*/
-                ((MyAdapter)listview.getAdapter()).getFilter().filter(filterText);
+                String text=editTextFilter.getText().toString().toLowerCase(Locale.getDefault());
+                Log.i("Text",text);
+                adapter.filter(text);
             }
         });
 

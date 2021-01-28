@@ -1,6 +1,7 @@
 package com.example.newapp.listview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import com.example.newapp.database.Students;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import io.realm.Realm;
 
-public class MyAdapter extends BaseAdapter implements Filterable{
+public class MyAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<Students> studentlist, filteredItemList;
     Context mContext = null;
@@ -27,20 +30,22 @@ public class MyAdapter extends BaseAdapter implements Filterable{
 
     public MyAdapter(Context context, ArrayList<Students> data) {
         mContext = context;
-        studentlist = data;
+        filteredItemList=data;
+        studentlist=new ArrayList<>();
+        studentlist.addAll(filteredItemList);
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     //Adapter에 사용되는 데이터의 개수
     @Override
     public int getCount() {
-        return studentlist.size();
+        return filteredItemList.size();
     }
 
     // 지정한 position에 있는 데이터 리턴
     @Override
     public Object getItem(int position) {
-        return studentlist.get(position);
+        return filteredItemList.get(position);
     }
 
     // 지정한 position에 있는 데이터와 관계된 아이템의 ID 리턴
@@ -53,8 +58,8 @@ public class MyAdapter extends BaseAdapter implements Filterable{
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View 리턴
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos=position;
-        final Context context=parent.getContext();
+      //  final int pos=position;
+       // final Context context=parent.getContext();
 
         if(convertView==null){
            // LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -68,7 +73,7 @@ public class MyAdapter extends BaseAdapter implements Filterable{
         TextView dateText=(TextView)convertView.findViewById(R.id.date);
 
         // position에 위치한 데이터 참조 획득
-        Students students=studentlist.get(position);
+        Students students=filteredItemList.get(position);
 
         nameText.setText("이름: "+ students.getName());
         ageText.setText("나이: "+students.getAge());
@@ -78,51 +83,23 @@ public class MyAdapter extends BaseAdapter implements Filterable{
         return convertView;
     }
 
-    Filter listfilter;
-    @Override
-    public Filter getFilter() {
-        if(listfilter==null){
-            listfilter=new ListFilter();
+    public void filter(String charText){
+        charText=charText.toLowerCase(Locale.getDefault());
+        filteredItemList.clear();
+        if(charText.length()==0){
+            filteredItemList.addAll(studentlist);
         }
-        return listfilter;
-    }
-
-    private class ListFilter extends Filter{
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults() ;
-
-            if (constraint == null || constraint.length() == 0) {
-                results.values = studentlist ;
-                results.count = studentlist.size() ;
-            } else {
-                ArrayList<Students> itemList = new ArrayList<Students>() ;
-
-                for (Students item : studentlist) {
-                    if (item.getName().toUpperCase().contains(constraint.toString().toUpperCase()))
-                    {
-                        itemList.add(item) ;
-                    }
+        else{
+            for(Students student:studentlist){
+                String name= student.getName();
+                Log.i("Name",name);
+                Log.i("Text",charText);
+                if(name.toLowerCase().contains(charText)){
+                    filteredItemList.add(student);
                 }
-
-                results.values = itemList ;
-                results.count = itemList.size() ;
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            // update listview by filtered data list.
-            filteredItemList = (ArrayList<Students>) results.values ;
-
-            // notify
-            if (results.count > 0) {
-                notifyDataSetChanged() ;
-            } else {
-                notifyDataSetInvalidated() ;
             }
         }
+        notifyDataSetChanged();
     }
+
 }
