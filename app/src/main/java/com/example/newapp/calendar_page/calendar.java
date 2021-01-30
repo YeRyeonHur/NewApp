@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
+import com.example.newapp.database.Students;
 import com.example.newapp.sign.login;
 
 import java.text.SimpleDateFormat;
@@ -25,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class calendar extends AppCompatActivity {
     public static String DATE="";
@@ -149,9 +154,13 @@ public class calendar extends AppCompatActivity {
                  */
                 String[] strArr=tvDate.getText().toString().split("/");
 
+
+
+                int calc;
                 String YEAR=strArr[0];
                 String MONTH=strArr[1];
                 String Day=String.valueOf(day);
+
 
                 if(!Day_in(YEAR, MONTH, day)) return;
 
@@ -159,7 +168,17 @@ public class calendar extends AppCompatActivity {
                     Day="0"+day;
                 }
                 String final_date =YEAR+'/'+MONTH+'/'+Day;
+
+                calc = (dayNum + day - 1) % 7;
+
+                intent.putExtra("spec", day);
+
                 intent.putExtra("data",final_date);
+
+
+
+                intent.putExtra("day_of_week", calc);
+
                 startActivity(intent);
                 overridePendingTransition(0,0);
 

@@ -51,7 +51,6 @@ public class Register extends AppCompatActivity {
 
         //파이어베이스 접근 설정
         firebaseAuth=FirebaseAuth.getInstance();
-
         mName=findViewById(R.id.nameEt);
         mAcademyname=findViewById(R.id.academyEt);
         mIdText=findViewById(R.id.idEt);
