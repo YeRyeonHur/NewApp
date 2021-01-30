@@ -26,14 +26,10 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class popup_activity extends Activity {
-    private ArrayList<Students> studentlist, filteredItemList;
-    private ArrayList<String> name;
     TextView txtText;
     Button click;
     TextView date_show;
 
-    private  Realm realm;
-    int flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +54,17 @@ public class popup_activity extends Activity {
         String info=intent.getStringExtra("Info");
         txtText.setText(info);
 
+        //무슨 날짜 선택한지 받기
         int final_day = intent.getIntExtra("spec", 0);
+
+        //1일 요일
         int day_of_week = intent.getIntExtra("day_of_week",0);
 
 
         String paying="결제 필요"+"\n";
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Students> stu;
+        //결제날짜랑 요일 일치하면 paying에 추가
         stu = realm.where(Students.class).equalTo("date", final_day).findAll();
         int count = stu.size();
         if(count == 0){
@@ -72,7 +72,7 @@ public class popup_activity extends Activity {
         }
         String coming ="등원생 목록"+"\n";
 
-
+        //등원 날짜랑 일치하면 coming 추가
         for(Students s : stu){
             String name = s.getName();
             paying+=name +"\n";
@@ -148,6 +148,8 @@ public class popup_activity extends Activity {
             coming="";
         }
 
+
+        //txtText에 넣기
         txtText.setText(paying+coming);
 
 
@@ -185,10 +187,6 @@ public class popup_activity extends Activity {
 
 
 
-    private void readData(){
-        studentlist.clear();
-        RealmResults<Students>results=realm.where(Students.class).findAll();
-        studentlist.addAll(realm.copyFromRealm(results));
-    }
+
 
 }
