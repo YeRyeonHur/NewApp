@@ -137,10 +137,10 @@ public class calendar extends AppCompatActivity {
 
         today = mCal.get(Calendar.DAY_OF_MONTH);
 
-        PaintDrawable pd = new PaintDrawable(R.color.purple_200);
+        /*PaintDrawable pd = new PaintDrawable(R.color.purple_200);
         pd.setAlpha(70);
 
-        gridView.setSelector(pd);
+        gridView.setSelector(pd);*/
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

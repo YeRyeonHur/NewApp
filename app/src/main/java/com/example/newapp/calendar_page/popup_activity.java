@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
@@ -31,6 +32,8 @@ public class popup_activity extends Activity {
     TextView txtText;
     Button click;
     TextView date_show;
+    //정렬
+    int[] sort = new int[100];
 
     private  Realm realm;
     int flag=0;
@@ -80,66 +83,157 @@ public class popup_activity extends Activity {
 
         if(day_of_week==1){//일
             stu = realm.where(Students.class).notEqualTo("sun", -1).findAll();
-            for(Students s : stu){
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getSun()>stu.get(j).getSun()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getSun()/100;
+                int min = stu.get(sort[i]).getSun()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
+            }
+            /*for(Students s : stu){
                 String name = s.getName();
                 int hour = s.getSun()/100;
                 int min = s.getSun()%100;
                 coming += name + " " + hour +"시"+min +"분\n";
-            }
+            }*/
 
         }
         else if(day_of_week==2){//월
+
             stu = realm.where(Students.class).notEqualTo("mon", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getMon()/100;
-                int min = s.getMon()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getMon()>stu.get(j).getMon()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getMon()/100;
+                int min = stu.get(sort[i]).getMon()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
         else if(day_of_week==3){//화
             stu = realm.where(Students.class).notEqualTo("tue", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getTue()/100;
-                int min = s.getTue()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getTue()>stu.get(j).getTue()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getTue()/100;
+                int min = stu.get(sort[i]).getTue()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
         else if(day_of_week==4){//수
             stu = realm.where(Students.class).notEqualTo("wed", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getWed()/100;
-                int min = s.getWed()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getWed()>stu.get(j).getWed()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getWed()/100;
+                int min = stu.get(sort[i]).getWed()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
         else if(day_of_week==5){//목
             stu = realm.where(Students.class).notEqualTo("thu", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getThu()/100;
-                int min = s.getThu()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getThu()>stu.get(j).getThu()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getThu()/100;
+                int min = stu.get(sort[i]).getThu()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
         else if(day_of_week==6){//금
             stu = realm.where(Students.class).notEqualTo("fri", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getFri()/100;
-                int min = s.getFri()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getFri()>stu.get(j).getFri()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getFri()/100;
+                int min = stu.get(sort[i]).getFri()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
         else {//토
             stu = realm.where(Students.class).notEqualTo("sat", -1).findAll();
-            for(Students s : stu){
-                String name = s.getName();
-                int hour = s.getSat()/100;
-                int min = s.getSat()%100;
-                coming += name + " " + hour +"시"+min +"분\n";
+            int num = stu.size();
+            for(int i=0;i<num;i++){
+                sort[i] = i;
+            }
+            for(int i=0;i<num;i++){
+                for(int j=i+1;j<num;j++){
+                    if(stu.get(i).getSat()>stu.get(j).getSat()){
+                        int tmp = sort[i];
+                        sort[i] = sort[j];
+                        sort[j] = tmp;
+                    }
+                }
+            }
+            for(int i=0;i<num;i++){
+                int hour = stu.get(sort[i]).getSat()/100;
+                int min = stu.get(sort[i]).getSat()%100;
+                coming += stu.get(sort[i]).getName() + " " + hour +"시"+min +"분\n";
             }
         }
 
