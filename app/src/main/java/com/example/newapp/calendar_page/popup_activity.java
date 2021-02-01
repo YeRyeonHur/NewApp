@@ -57,7 +57,7 @@ public class popup_activity extends Activity {
         String data = intent.getStringExtra("data");
         date_show.setText(data);
 
-        // 이것좀 쓸게요 ㅎㅎ -은화가-
+
         String info=intent.getStringExtra("Info");
         txtText.setText(info);
 

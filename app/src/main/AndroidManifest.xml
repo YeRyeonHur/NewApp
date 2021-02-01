@@ -24,6 +24,7 @@
         <activity android:name="com.example.newapp.sign.Register"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name="com.example.newapp.sign.find_id"></activity>
+        <activity android:name="com.example.newapp.listview.attenList"></activity>
 
     </application>
 
