@@ -38,20 +38,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center|right"
+            android:orientation="horizontal"
             android:layout_weight="1">
-       <ImageView
-           android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right">
+
+       <Button
+           android:layout_width="50dp"
            android:layout_height="wrap_content"
-           android:paddingRight="30dp"
-           android:src="@drawable/ic_baseline_event_available_24"
-           android:textSize="30sp"/>
-        <ImageView
-            android:layout_width="wrap_content"
+           android:backgroundTint="@color/white"
+           android:foreground="@drawable/ic_baseline_event_available_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+        <Button
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:paddingRight="30dp"
-            android:src="@drawable/ic_baseline_email_24"
-            android:textSize="30sp"/>
+
+            android:foreground="@drawable/ic_baseline_email_24" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
