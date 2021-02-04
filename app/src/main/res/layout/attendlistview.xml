@@ -5,70 +5,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/today_date"
+        android:textSize="20dp"
+        android:text="출석 체크"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="검색 : "
+            android:textSize="18dp"
+            android:gravity="center"/>
         <EditText
             android:id="@+id/edittxt"
             android:hint="이름을 입력하세요."
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="5"
             />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
         >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="명단"
-                />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="명단"
+            android:gravity="center"/>
 
-       <Button
-           android:layout_width="50dp"
-           android:layout_height="wrap_content"
-           android:backgroundTint="@color/white"
-           android:foreground="@drawable/ic_baseline_event_available_24" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="등원시각"
+            android:gravity="center"/>
 
         <Button
-            android:layout_width="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:id="@+id/attend_btn"
+            android:clickable="true"
+            android:onClick="clicked_attend"
             android:backgroundTint="@color/white"
-            android:paddingRight="30dp"
+            android:foreground="@drawable/ic_baseline_event_available_24"/>
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_btn"
+            android:backgroundTint="@color/white"
             android:foreground="@drawable/ic_baseline_email_24" />
-            </LinearLayout>
 
-        </LinearLayout>
     </LinearLayout>
 
 

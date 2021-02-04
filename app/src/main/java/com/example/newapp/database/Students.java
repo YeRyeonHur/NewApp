@@ -5,12 +5,15 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 
 public class Students extends RealmObject implements Serializable {
+    private int std_id;
     private String name, phone;
-    int date;
+    private int date;
     private int mon, tue, wed, thu, fri, sat, sun;
     private int age;
     private String par_name, par_phone;
     private String memo;
+    private boolean attendchk, attended;
+    private boolean sendchk, sent;
 
     public Students(String name, int age, String phone, int date){
         this.name=name;
@@ -18,10 +21,12 @@ public class Students extends RealmObject implements Serializable {
         this.phone=phone;
         this.date=date;
         mon = tue = wed = thu = fri = sat = sun = -1;
+        attendchk = attended = sendchk = sent = false;
     }
 
     public Students(){
         mon = tue = wed = thu = fri = sat = sun = -1;
+        attendchk = attended = sendchk = sent = false;
     }
 
     public String getName(){
@@ -46,6 +51,12 @@ public class Students extends RealmObject implements Serializable {
     public String getPar_name() { return par_name; }
     public String getPar_phone() { return par_phone; }
     public String getMemo() {return memo;}
+    public int getStd_id(){return std_id;}
+    public boolean getAttendchk() {return attendchk;}
+    public boolean getAttended() {return attended;}
+    public boolean getSendchk() {return sendchk;}
+    public boolean getSent() {return sent;}
+
 
     public String getInfo(){
 
@@ -82,5 +93,21 @@ public class Students extends RealmObject implements Serializable {
     }
     public void setTime(int mon, int tue, int wed, int thu, int fri, int sat, int sun){
         this.mon = mon; this.tue = tue; this.wed = wed; this.thu = thu; this.fri = fri; this.sat = sat; this.sun = sun;
+    }
+    public void setStd_id(int std_id){
+        this.std_id = std_id;
+    }
+
+    public void setAttendchk(boolean attendchk){
+        this.attendchk = attendchk;
+    }
+    public void setAttended(boolean attended){
+        this.attended = attended;
+    }
+    public void setSendchk(boolean sendchk){
+        this.sendchk = sendchk;
+    }
+    public void setSent(boolean sent){
+        this.sent = sent;
     }
 }

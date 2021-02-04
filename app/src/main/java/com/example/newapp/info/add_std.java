@@ -9,16 +9,19 @@ import android.os.CancellationSignal;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import com.example.newapp.calendar_page.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.MainActivity;
 import com.example.newapp.R;
+import com.example.newapp.database.PreferenceManager;
 import com.example.newapp.database.Students;
 import com.example.newapp.listview.MyAdapter;
 import com.example.newapp.listview.studentList;
@@ -29,6 +32,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class add_std extends AppCompatActivity {
@@ -39,6 +43,8 @@ public class add_std extends AppCompatActivity {
     private boolean Flag=false;
     private  Intent intent;
     private Students getstudent;
+    private Button back_but;
+    Realm realm;
 
 
     @Override
@@ -72,6 +78,16 @@ public class add_std extends AppCompatActivity {
             preWrite(getstudent);
             Flag=true;
         }
+
+        back_but = findViewById(R.id.std_cancel_But);
+        back_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(add_std.this, calendar.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -234,9 +250,8 @@ public class add_std extends AppCompatActivity {
 
         //저장
         Students students = new Students();
-        Realm realm;
 
-        //Realm.init(this);
+        Realm.init(this);
         realm = Realm.getDefaultInstance();
 
 
@@ -250,6 +265,10 @@ public class add_std extends AppCompatActivity {
             students.setDate(pay_date);
             students.setParent(par_name, par_phone);
             students.setMemo(memo);
+
+            int id = PreferenceManager.getInt(this, "std_id");
+            students.setStd_id(id);
+            PreferenceManager.setInt(this, "std_id", id + 1);
 
             realm.commitTransaction();
             Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show();
@@ -267,7 +286,7 @@ public class add_std extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //메인으로 돌아감
-                    Intent intent = new Intent(add_std.this, MainActivity.class);
+                    Intent intent = new Intent(add_std.this, calendar.class);
                     startActivity(intent);
                     finish();
                 }
