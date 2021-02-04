@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
 import com.example.newapp.listview.attenList;
+import com.example.newapp.listview.paymentList;
 import com.example.newapp.sign.login;
 
 import java.text.SimpleDateFormat;
@@ -441,6 +442,15 @@ public class calendar extends AppCompatActivity {
 
         Intent intent=new Intent(getApplicationContext(), attenList.class);
         startActivity(intent);
+    }
+    //결제 체크 버튼
+    public void payment(View v){
+        // 오늘 요일
+
+        Intent intent=new Intent(getApplicationContext(), paymentList.class);
+        startActivity(intent);
+        intent.putExtra("month",nowMonth);
+        //Toast.makeText(getApplicationContext(),nowMonth,Toast.LENGTH_LONG);
     }
 
 }

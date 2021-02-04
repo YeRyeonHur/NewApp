@@ -81,6 +81,9 @@ public class MyAdapter extends BaseAdapter{
             else if(what==1){
                 convertView=mLayoutInflater.inflate(R.layout.attendlist,parent,false);
             }
+            else if(what==2){
+                convertView=mLayoutInflater.inflate(R.layout.paymentlist,parent,false);
+            }
         }
 
         TextView nameText;
@@ -166,6 +169,10 @@ public class MyAdapter extends BaseAdapter{
                     realm.commitTransaction();
                 }
             });
+        }
+        else if(what==2){
+            nameText=(TextView)convertView.findViewById(R.id.payment_name);
+            nameText.setText(students.getName());
         }
 
 
