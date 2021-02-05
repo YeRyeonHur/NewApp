@@ -157,7 +157,7 @@ public class studentList extends AppCompatActivity{
 
         private void CreateView(){
         //Adapter 생성
-        adapter=new MyAdapter(this, studentlist);
+        adapter=new MyAdapter(this, studentlist,0);
 
         // 리스트뷰 참조 및 Apater 달기
         listview=(ListView)findViewById(R.id.listview);

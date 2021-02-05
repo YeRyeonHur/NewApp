@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
+import com.example.newapp.listview.attenList;
+import com.example.newapp.listview.paymentList;
 import com.example.newapp.sign.login;
 
 import java.text.SimpleDateFormat;
@@ -69,6 +72,7 @@ public class calendar extends AppCompatActivity {
     Integer nowMonth;
     private long backKeyPressedTime = 0;
     private Toast toast;
+    private Button att_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class calendar extends AppCompatActivity {
         gridView = (GridView)findViewById(R.id.gridview);
 
 
-
+        att_btn=(Button)findViewById(R.id.attend_btn);
 
         ImageView iv_last =  (ImageView)findViewById(R.id.iv_lastmonth);
         ImageView iv_next =  (ImageView)findViewById(R.id.iv_nextmonth);
@@ -137,10 +141,10 @@ public class calendar extends AppCompatActivity {
 
         today = mCal.get(Calendar.DAY_OF_MONTH);
 
-        PaintDrawable pd = new PaintDrawable(R.color.purple_200);
+        /*PaintDrawable pd = new PaintDrawable(R.color.purple_200);
         pd.setAlpha(70);
 
-        gridView.setSelector(pd);
+        gridView.setSelector(pd);*/
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -430,6 +434,23 @@ public class calendar extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    //출석 체크 버튼
+    public void attend(View v){
+        // 오늘 요일
+
+        Intent intent=new Intent(getApplicationContext(), attenList.class);
+        startActivity(intent);
+    }
+    //결제 체크 버튼
+    public void payment(View v){
+        // 오늘 요일
+
+        Intent intent=new Intent(getApplicationContext(), paymentList.class);
+        startActivity(intent);
+        intent.putExtra("month",nowMonth);
+        //Toast.makeText(getApplicationContext(),nowMonth,Toast.LENGTH_LONG);
     }
 
 }
