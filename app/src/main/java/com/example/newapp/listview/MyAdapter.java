@@ -1,11 +1,15 @@
 package com.example.newapp.listview;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.telephony.SmsManager;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
 import com.example.newapp.calendar_page.calendar;
@@ -198,18 +205,24 @@ public class MyAdapter extends BaseAdapter{
                     AlertDialog.Builder clsBuilder = new AlertDialog.Builder((attenList) context );
                     clsBuilder.setTitle( "메시지를 전송합니다." );
                     EditText message = new EditText((attenList)context);
+                    message.setFilters(new InputFilter[]{new InputFilter.LengthFilter((70))});
+                    Boolean who = false;
                     if(students.getPar_phone().length()>0){
                         clsBuilder.setMessage("학부모 P. " + students.getPar_phone());
+                        who = false;
                     }
                     else{
                         clsBuilder.setMessage("학생 P. " + students.getPhone());
+                        who = true;
                     }
                     message.setText(students.getName() + " 학생이 아직 등원하지 않았습니다. 확인 부탁 드립니다.");
                     clsBuilder.setView( message);
+                    Boolean finalWho = who;
                     clsBuilder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText((attenList) context, message.getText().toString(), Toast.LENGTH_SHORT).show();
+                           // Toast.makeText((attenList) context, message.getText().toString(), Toast.LENGTH_SHORT).show();
+                            send_message(students, message.getText().toString(), finalWho);Toast.makeText((attenList) context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                     });
                     clsBuilder.setNegativeButton("취소", null);
@@ -245,7 +258,21 @@ public class MyAdapter extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    void send_message(Students students){
-
+    void send_message(Students students, String text, Boolean who){
+        String phoneNo;
+        if(who == false){//학부모
+            phoneNo = students.getPar_phone();
+        }
+        else{//학생
+            phoneNo = students.getPhone();
+        }
+        phoneNo = phoneNo.replaceAll("-", "");
+        try{
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, text, null, null);
+            Toast.makeText(context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(context, "메시지 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
