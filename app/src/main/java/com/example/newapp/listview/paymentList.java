@@ -1,5 +1,7 @@
 package com.example.newapp.listview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -98,73 +100,91 @@ public class paymentList extends AppCompatActivity {
 
     public void reset(View view){
         //리셋버튼 누를 때
-        Toast.makeText(paymentList.this, "이번 달 결제 여부를 리셋합니다.",Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("이달의 결제정보를 리셋 하시겠습니까?");
+        alert.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //현재 보고있는 달 리셋 시키기
+                        realm.beginTransaction();
+                        if(showM==1){
+                            for(Students s : stu){
+                                s.setjan(-1);
+                            }
+                        }
+                        if(showM==2){
+                            for(Students s : stu){
+                                s.setfab(-1);
+                            }
+                        }
+                        if(showM==3){
+                            for(Students s : stu){
+                                s.setmar(-1);
+                            }
+                        }
+                        if(showM==4){
+                            for(Students s : stu){
+                                s.setapr(-1);
+                            }
+                        }
+                        if(showM==5){
+                            for(Students s : stu){
+                                s.setmay(-1);
+                            }
+                        }
+                        if(showM==6){
+                            for(Students s : stu){
+                                s.setjun(-1);
+                            }
+                        }
+                        if(showM==7){
+                            for(Students s : stu){
+                                s.setjul(-1);
+                            }
+                        }
+                        if(showM==8){
+                            for(Students s : stu){
+                                s.setaug(-1);
+                            }
+                        }
+                        if(showM==9){
+                            for(Students s : stu){
+                                s.setsep(-1);
+                            }
+                        }
+                        if(showM==10){
+                            for(Students s : stu){
+                                s.setoct(-1);
+                            }
+                        }
+                        if(showM==11){
+                            for(Students s : stu){
+                                s.setnov(-1);
+                            }
+                        }
+                        if(showM==12){
+                            for(Students s : stu){
+                                s.setdec(-1);
+                            }
+                        }
+                        realm.commitTransaction();
+
+                        Intent intent=new Intent(getApplicationContext(), calendar.class);
+                        startActivity(intent);
+                    }
+                });
+        alert.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alert.show();
 
 
-        realm.beginTransaction();
-        if(showM==1){
-            for(Students s : stu){
-                s.setjan(-1);
-            }
-        }
-        if(showM==2){
-            for(Students s : stu){
-                s.setfab(-1);
-            }
-        }
-        if(showM==3){
-            for(Students s : stu){
-                s.setmar(-1);
-            }
-        }
-        if(showM==4){
-            for(Students s : stu){
-                s.setapr(-1);
-            }
-        }
-        if(showM==5){
-            for(Students s : stu){
-                s.setmay(-1);
-            }
-        }
-        if(showM==6){
-            for(Students s : stu){
-                s.setjun(-1);
-            }
-        }
-        if(showM==7){
-            for(Students s : stu){
-                s.setjul(-1);
-            }
-        }
-        if(showM==8){
-            for(Students s : stu){
-                s.setaug(-1);
-            }
-        }
-        if(showM==9){
-            for(Students s : stu){
-                s.setsep(-1);
-            }
-        }
-        if(showM==10){
-            for(Students s : stu){
-                s.setoct(-1);
-            }
-        }
-        if(showM==11){
-            for(Students s : stu){
-                s.setnov(-1);
-            }
-        }
-        if(showM==12){
-            for(Students s : stu){
-                s.setdec(-1);
-            }
-        }
-        realm.commitTransaction();
-        Intent intent=new Intent(getApplicationContext(), calendar.class);
-        startActivity(intent);
+
+
+
 
     }
 
