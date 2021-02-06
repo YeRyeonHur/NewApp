@@ -1,8 +1,10 @@
 package com.example.newapp.calendar_page;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
 import com.example.newapp.database.Students;
@@ -74,10 +78,14 @@ public class calendar extends AppCompatActivity {
     private Toast toast;
     private Button att_btn;
 
+    final int MY_PERMISSION_SEND_MESSAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
+        checkPermission_SMS();
+
         tvDate = (TextView)findViewById(R.id.tv_date);
         gridView = (GridView)findViewById(R.id.gridview);
 
@@ -451,6 +459,19 @@ public class calendar extends AppCompatActivity {
         startActivity(intent);
         intent.putExtra("month",nowMonth);
         //Toast.makeText(getApplicationContext(),nowMonth,Toast.LENGTH_LONG);
+    }
+
+    //메시지 권한
+    public void checkPermission_SMS(){
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_SEND_MESSAGE);
+            }
+            else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_SEND_MESSAGE);
+            }
+        }
     }
 
 }

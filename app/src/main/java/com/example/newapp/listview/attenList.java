@@ -1,9 +1,11 @@
 package com.example.newapp.listview;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
 import com.example.newapp.calendar_page.calendar;
@@ -61,13 +65,13 @@ public class attenList extends AppCompatActivity {
         if (!saved_date.equals(new_date)) {
             PreferenceManager.setString(this, "attend_date", new_date);
             realm.beginTransaction();
-            stu = realm.where(Students.class).equalTo("attendchk", false).findAll();
-            for(int i = 0; i < stu.size(); i++){
-                stu.get(i).setAttendchk(false);
+            stu = realm.where(Students.class).equalTo("attendchk", true).findAll();
+            for(Students student : stu){
+                student.setAttendchk(false);
             }
-            stu = realm.where(Students.class).equalTo("attended", false).findAll();
-            for(int i = 0; i < stu.size(); i++){
-                stu.get(i).setAttended(false);
+            stu = realm.where(Students.class).equalTo("attended", true).findAll();
+            for(Students student : stu){
+                student.setAttended(false);
             }
             realm.commitTransaction();
         }
@@ -157,13 +161,16 @@ public class attenList extends AppCompatActivity {
                     return;
                 }
                 realm.beginTransaction();
-                for(int i = 0; i < attendstudents.size(); i++){
-                    attendstudents.get(i).setAttendchk(false);
-                    attendstudents.get(i).setAttended(true);
-                    today_attend_id.add(attendstudents.get(i).getStd_id() + "");
+
+                for(Students student : attendstudents){
+                    Log.i("아이디", student.getStd_id() + "");
+                    student.setAttended(true);
+                    student.setAttendchk(false);
+                    today_attend_id.add(student.getStd_id() + "");
                 }
                 realm.commitTransaction();
                 adapter.notifyDataSetChanged();
+                getStudent();
                 CreateView();
                 Toast.makeText(attenList.this, "출석 체크가 완료되었습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -176,4 +183,7 @@ public class attenList extends AppCompatActivity {
         });
         alert.show();
     }
+
+
+
 }

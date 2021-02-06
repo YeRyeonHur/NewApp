@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/Name"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="2"
             android:text=" "
             android:textSize="18dp"/>
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/Time"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="2"
             android:text=" "
             android:textSize="18dp"/>
@@ -36,10 +36,11 @@
             android:id="@+id/checkBox1"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:clickable="true"
             android:focusable="false"
             android:gravity="center" />
+
         <TextView
             android:id="@+id/attended"
             android:layout_width="0dp"
@@ -50,14 +51,16 @@
             android:layout_height="wrap_content"
             android:text = "출석"/>
 
-        <CheckBox
-            android:id="@+id/checkBox2"
+        <ImageButton
+            android:id="@+id/attend_send_message"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="false"
-            android:gravity="center" />
+            android:layout_height="30dp"
+            android:src="@drawable/send"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:padding="3dp"/>
+
         <TextView
             android:id="@+id/sent"
             android:layout_width="0dp"

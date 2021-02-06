@@ -1,19 +1,37 @@
 package com.example.newapp.listview;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.telephony.SmsManager;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
+import com.example.newapp.calendar_page.calendar;
 import com.example.newapp.database.Students;
+import com.example.newapp.info.add_std;
 
 import org.w3c.dom.Text;
 
@@ -35,6 +53,7 @@ public class MyAdapter extends BaseAdapter{
     private int day_of_week;
     private Realm realm;
     private Students stu;
+    Context context;
 
     public MyAdapter(Context context, ArrayList<Students> data, int what) {
         mContext = context;
@@ -46,6 +65,7 @@ public class MyAdapter extends BaseAdapter{
         calendar = Calendar.getInstance();
         day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
         realm = Realm.getDefaultInstance();
+        this.context = context;
     }
 
     //Adapter에 사용되는 데이터의 개수
@@ -92,6 +112,7 @@ public class MyAdapter extends BaseAdapter{
         TextView dateText;
         TextView timeText;
         TextView idText;
+        ImageButton sendBtn;
 
         // position에 위치한 데이터 참조 획득
         Students students=filteredItemList.get(position);
@@ -112,6 +133,7 @@ public class MyAdapter extends BaseAdapter{
             nameText.setText(students.getName());
             timeText = convertView.findViewById(R.id.Time);
             idText = convertView.findViewById(R.id.attend_std_id);
+            sendBtn = convertView.findViewById(R.id.attend_send_message);
 
             //등원 시각 표시
             idText.setText(students.getStd_id() + "");
@@ -147,6 +169,7 @@ public class MyAdapter extends BaseAdapter{
             if(students.getAttended()){//출석이 체크 되었다면
                 chk1.setVisibility(View.GONE);
                 attended.setVisibility(View.VISIBLE);
+                sendBtn.setImageResource(R.drawable.send_off);
             }
             else if(students.getAttendchk()){//출석 체크 박스에 체크가 되어 있었다면
                 chk1.setChecked(true);
@@ -167,6 +190,43 @@ public class MyAdapter extends BaseAdapter{
                         stu.setAttendchk(false);
                     }
                     realm.commitTransaction();
+                }
+            });
+
+            //메시지 전송 버튼을 눌렀을 때
+            sendBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(students.getAttended() == true) return;
+                    if(students.getPhone().length() == 0 && students.getPar_phone().length() == 0){
+                        Toast.makeText((attenList) context, "전화번호 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    AlertDialog.Builder clsBuilder = new AlertDialog.Builder((attenList) context );
+                    clsBuilder.setTitle( "메시지를 전송합니다." );
+                    EditText message = new EditText((attenList)context);
+                    message.setFilters(new InputFilter[]{new InputFilter.LengthFilter((70))});
+                    Boolean who = false;
+                    if(students.getPar_phone().length()>0){
+                        clsBuilder.setMessage("학부모 P. " + students.getPar_phone());
+                        who = false;
+                    }
+                    else{
+                        clsBuilder.setMessage("학생 P. " + students.getPhone());
+                        who = true;
+                    }
+                    message.setText(students.getName() + " 학생이 아직 등원하지 않았습니다. 확인 부탁 드립니다.");
+                    clsBuilder.setView( message);
+                    Boolean finalWho = who;
+                    clsBuilder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                           // Toast.makeText((attenList) context, message.getText().toString(), Toast.LENGTH_SHORT).show();
+                            send_message(students, message.getText().toString(), finalWho);Toast.makeText((attenList) context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    clsBuilder.setNegativeButton("취소", null);
+                    clsBuilder.show();
                 }
             });
         }
@@ -196,5 +256,23 @@ public class MyAdapter extends BaseAdapter{
             }
         }
         notifyDataSetChanged();
+    }
+
+    void send_message(Students students, String text, Boolean who){
+        String phoneNo;
+        if(who == false){//학부모
+            phoneNo = students.getPar_phone();
+        }
+        else{//학생
+            phoneNo = students.getPhone();
+        }
+        phoneNo = phoneNo.replaceAll("-", "");
+        try{
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, text, null, null);
+            Toast.makeText(context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(context, "메시지 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
