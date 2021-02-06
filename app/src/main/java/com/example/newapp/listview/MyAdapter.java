@@ -240,8 +240,53 @@ public class MyAdapter extends BaseAdapter{
             CheckBox paycheck = convertView.findViewById(R.id.payment_checkBox);
             TextView pay_date = convertView.findViewById(R.id.pay_day);
             idText = convertView.findViewById(R.id.attend_std_id);
-
+            sendBtn = convertView.findViewById(R.id.payment_send_message);
             idText.setText(students.getStd_id() + "");
+
+            if(!paycheck.isChecked()){
+                //메시지 전송 버튼을 눌렀을 때
+                sendBtn.setImageResource(R.drawable.send);
+                sendBtn.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        //if(students.getPaymentchk() == true) return;
+                        if(students.getPhone().length() == 0 && students.getPar_phone().length() == 0){
+                            Toast.makeText((paymentList) context, "전화번호 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        AlertDialog.Builder clsBuilder = new AlertDialog.Builder((paymentList) context );
+                        clsBuilder.setTitle( "메시지를 전송합니다." );
+                        EditText message = new EditText((paymentList)context);
+                        message.setFilters(new InputFilter[]{new InputFilter.LengthFilter((70))});
+                        Boolean who = false;
+                        if(students.getPar_phone().length()>0){
+                            clsBuilder.setMessage("학부모 P. " + students.getPar_phone());
+                            who = false;
+                        }
+                        else{
+                            clsBuilder.setMessage("학생 P. " + students.getPhone());
+                            who = true;
+                        }
+                        message.setText(students.getName() + " 학생 "+showmonth+"월 결제되지 않았습니다."+" 확인 부탁 드립니다.");
+                        clsBuilder.setView( message);
+                        Boolean finalWho = who;
+                        clsBuilder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Toast.makeText((paymentList) context, message.getText().toString(), Toast.LENGTH_SHORT).show();
+                                send_message(students, message.getText().toString(), finalWho);Toast.makeText((paymentList) context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        clsBuilder.setNegativeButton("취소", null);
+                        clsBuilder.show();
+                    }
+                });
+            }
+            else if(paycheck.isChecked()){
+                sendBtn.setImageResource(R.drawable.send_off);
+            }
+
+
 
             int checking = 1;
             if(showmonth==1){
@@ -373,6 +418,7 @@ public class MyAdapter extends BaseAdapter{
                     realm.beginTransaction();
                     stu = realm.where(Students.class).equalTo("std_id", Integer.parseInt(idText.getText().toString())).findFirst();
                     if(paycheck.isChecked()){
+                        sendBtn.setImageResource(R.drawable.send);
                         if(showmonth==1){ stu.setjan(1); }
                         if(showmonth==2){ stu.setfab(1); }
                         if(showmonth==3){ stu.setmar(1); }
@@ -388,6 +434,7 @@ public class MyAdapter extends BaseAdapter{
                         paycheck.setText("결제 완료");
                     }
                     else{
+                        sendBtn.setImageResource(R.drawable.send_off);
                         paycheck.setText("결제 필요");
                         if(showmonth==1){ stu.setjan(-1); }
                         if(showmonth==2){ stu.setfab(-1); }
@@ -428,7 +475,6 @@ public class MyAdapter extends BaseAdapter{
                 }
             }
         }
-        notifyDataSetChanged();
     }
 
     void send_message(Students students, String text, Boolean who){
