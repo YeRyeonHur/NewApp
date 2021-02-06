@@ -149,10 +149,10 @@ public class calendar extends AppCompatActivity {
 
         today = mCal.get(Calendar.DAY_OF_MONTH);
 
-        /*PaintDrawable pd = new PaintDrawable(R.color.purple_200);
+        PaintDrawable pd = new PaintDrawable(R.color.purple_200);
         pd.setAlpha(70);
 
-        gridView.setSelector(pd);*/
+        gridView.setSelector(pd);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -456,8 +456,9 @@ public class calendar extends AppCompatActivity {
         // 오늘 요일
 
         Intent intent=new Intent(getApplicationContext(), paymentList.class);
+        intent.putExtra("month",nowMonth+1);
         startActivity(intent);
-        intent.putExtra("month",nowMonth);
+
         //Toast.makeText(getApplicationContext(),nowMonth,Toast.LENGTH_LONG);
     }
 

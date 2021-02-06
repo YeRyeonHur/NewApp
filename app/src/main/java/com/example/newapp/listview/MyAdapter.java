@@ -53,6 +53,8 @@ public class MyAdapter extends BaseAdapter{
     private int day_of_week;
     private Realm realm;
     private Students stu;
+    int month, showmonth;
+    RealmResults<Students> stud;
     Context context;
 
     public MyAdapter(Context context, ArrayList<Students> data, int what) {
@@ -65,6 +67,8 @@ public class MyAdapter extends BaseAdapter{
         calendar = Calendar.getInstance();
         day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
         realm = Realm.getDefaultInstance();
+        month = calendar.get(Calendar.MONTH)+3;
+        showmonth = paymentList.showM;
         this.context = context;
     }
 
@@ -233,6 +237,175 @@ public class MyAdapter extends BaseAdapter{
         else if(what==2){
             nameText=(TextView)convertView.findViewById(R.id.payment_name);
             nameText.setText(students.getName());
+            CheckBox paycheck = convertView.findViewById(R.id.payment_checkBox);
+            TextView pay_date = convertView.findViewById(R.id.pay_day);
+            idText = convertView.findViewById(R.id.attend_std_id);
+
+            idText.setText(students.getStd_id() + "");
+
+            int checking = 1;
+            if(showmonth==1){
+                checking=students.getjan();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==2){
+                checking= students.getfab();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==3){
+                checking= students.getmar();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==4){
+                checking= students.getapr();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==5){
+                checking= students.getmay();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==6){
+                checking= students.getjan();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==7){
+                checking= students.getjul();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==8){
+                checking= students.getaug();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==9){
+                checking= students.getsep();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==10){
+                checking= students.getoct();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==11){
+                checking= students.getnov();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            else if(showmonth==12){
+                checking= students.getdec();
+                if(checking==1){
+                    paycheck.setChecked(true);
+                    paycheck.setText("결제 완료");
+                }
+                else{
+                    paycheck.setChecked(false);
+                    paycheck.setText("결제 필요");
+                }}
+            Log.i("checkshowing", String.valueOf(showmonth));
+            pay_date.setText(students.getDate()+"일");
+            Log.i("checkshow", String.valueOf(checking));
+            paycheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    realm.beginTransaction();
+                    stu = realm.where(Students.class).equalTo("std_id", Integer.parseInt(idText.getText().toString())).findFirst();
+                    if(paycheck.isChecked()){
+                        if(showmonth==1){ stu.setjan(1); }
+                        if(showmonth==2){ stu.setfab(1); }
+                        if(showmonth==3){ stu.setmar(1); }
+                        if(showmonth==4){ stu.setapr(1); }
+                        if(showmonth==5){ stu.setmay(1); }
+                        if(showmonth==6){ stu.setjun(1); }
+                        if(showmonth==7){ stu.setjul(1); }
+                        if(showmonth==8){ stu.setaug(1); }
+                        if(showmonth==9){ stu.setsep(1); }
+                        if(showmonth==10){ stu.setoct(1); }
+                        if(showmonth==11){ stu.setnov(1); }
+                        if(showmonth==12){ stu.setdec(1); }
+                        paycheck.setText("결제 완료");
+                    }
+                    else{
+                        paycheck.setText("결제 필요");
+                        if(showmonth==1){ stu.setjan(-1); }
+                        if(showmonth==2){ stu.setfab(-1); }
+                        if(showmonth==3){ stu.setmar(-1); }
+                        if(showmonth==4){ stu.setapr(-1); }
+                        if(showmonth==5){ stu.setmay(-1); }
+                        if(showmonth==6){ stu.setjun(-1); }
+                        if(showmonth==7){ stu.setjul(-1); }
+                        if(showmonth==8){ stu.setaug(-1); }
+                        if(showmonth==9){ stu.setsep(-1); }
+                        if(showmonth==10){ stu.setoct(-1); }
+                        if(showmonth==11){ stu.setnov(-1); }
+                        if(showmonth==12){ stu.setdec(-1); }
+                    }
+                    realm.commitTransaction();
+                }
+            });
+
         }
 
 

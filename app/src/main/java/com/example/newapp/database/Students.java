@@ -14,6 +14,7 @@ public class Students extends RealmObject implements Serializable {
     private String memo;
     private boolean attendchk, attended;
     private boolean sendchk, sent;
+    private int jan, fab, mar, apr, may, jun, jul, aug, sep, oct, nov, dec;
 
     public Students(String name, int age, String phone, int date){
         this.name=name;
@@ -22,11 +23,13 @@ public class Students extends RealmObject implements Serializable {
         this.date=date;
         mon = tue = wed = thu = fri = sat = sun = -1;
         attendchk = attended = sendchk = sent = false;
+        jan = fab = mar = apr = may = jun = jul = aug = sep = oct = nov = dec = -1;
     }
 
     public Students(){
         mon = tue = wed = thu = fri = sat = sun = -1;
         attendchk = attended = sendchk = sent = false;
+        jan = fab = mar = apr = may = jun = jul = aug = sep = oct = nov = dec = -1;
     }
 
     public String getName(){
@@ -48,6 +51,18 @@ public class Students extends RealmObject implements Serializable {
     public int getFri() { return fri; }
     public int getSat() { return sat; }
     public int getSun() { return sun; }
+    public int getjan(){ return jan;}
+    public int getfab(){ return fab; }
+    public int getmar(){ return mar;}
+    public int getapr(){return apr;}
+    public int getmay(){return may;}
+    public int getjun(){return jun;}
+    public int getjul(){return jul;}
+    public int getaug(){return aug;}
+    public int getsep(){return sep;}
+    public int getoct(){return oct;}
+    public int getnov(){return nov;}
+    public int getdec(){return dec;}
     public String getPar_name() { return par_name; }
     public String getPar_phone() { return par_phone; }
     public String getMemo() {return memo;}
@@ -56,7 +71,6 @@ public class Students extends RealmObject implements Serializable {
     public boolean getAttended() {return attended;}
     public boolean getSendchk() {return sendchk;}
     public boolean getSent() {return sent;}
-
 
     public String getInfo(){
 
@@ -110,4 +124,18 @@ public class Students extends RealmObject implements Serializable {
     public void setSent(boolean sent){
         this.sent = sent;
     }
-}
+    public void setjan(int n){this.jan = n; }
+    public void setfab(int n){this.fab = n;}
+    public void setmar(int n){this.mar = n;}
+    public void setapr(int n){this.apr = n;}
+    public void setmay(int n){this.may = n;}
+    public void setjun(int n){this.jun = n;}
+    public void setjul(int n){this.jul = n;}
+    public void setaug(int n){this.aug = n;}
+    public void setsep(int n){this.sep = n;}
+    public void setoct(int n){this.oct = n;}
+    public void setnov(int n){this.nov = n;}
+    public void setdec(int n){this.dec = n;}
+    }
+
+

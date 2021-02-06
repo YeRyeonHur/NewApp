@@ -5,54 +5,74 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
+import com.example.newapp.calendar_page.calendar;
 import com.example.newapp.database.Students;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import javax.annotation.Nullable;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class paymentList extends AppCompatActivity {
+    public static int showM;
     private ListView listview;
     private MyAdapter adapter;
     private EditText editTextFilter;
     private Realm realm;
+    private  int month;
     private RealmResults<Students> stu;
     private ArrayList<Students> studentlist;
     private TextView tv_payment_month;
-
+    private Button prev, next, save;
+    private CheckBox checkBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paymentlistview);
         Intent payIntent = getIntent();
-        int month = payIntent.getIntExtra("month",0);
+        month = payIntent.getIntExtra("month",0);
+        showM=month;
+        checkBox = (CheckBox)findViewById(R.id.payment_checkBox);
         tv_payment_month = (TextView)findViewById(R.id.payment_month);
         tv_payment_month.setText(month+"월");
+        studentlist=new ArrayList<>();
 
+
+        prev = (Button)findViewById(R.id.prev_month);
+        next = (Button)findViewById(R.id.next_month);
+        save = (Button)findViewById(R.id.save);
+
+        realm=Realm.getDefaultInstance();
+        stu = realm.where(Students.class).findAll();
         getStudent();
         CreateView();
+
+
         // filtering
         editTextFilter=(EditText)findViewById(R.id.edittxt);
         editTextFilter.addTextChangedListener(new TextWatcher(){
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -64,7 +84,90 @@ public class paymentList extends AppCompatActivity {
         });
 
 
+
+
     }
+
+
+    public void save(View view){
+        //저장 버튼 누를때
+        Intent intent=new Intent(getApplicationContext(), calendar.class);
+        startActivity(intent);
+
+    }
+
+    public void reset(View view){
+        //리셋버튼 누를 때
+        Toast.makeText(paymentList.this, "이번 달 결제 여부를 리셋합니다.",Toast.LENGTH_SHORT).show();
+
+
+        realm.beginTransaction();
+        if(showM==1){
+            for(Students s : stu){
+                s.setjan(-1);
+            }
+        }
+        if(showM==2){
+            for(Students s : stu){
+                s.setfab(-1);
+            }
+        }
+        if(showM==3){
+            for(Students s : stu){
+                s.setmar(-1);
+            }
+        }
+        if(showM==4){
+            for(Students s : stu){
+                s.setapr(-1);
+            }
+        }
+        if(showM==5){
+            for(Students s : stu){
+                s.setmay(-1);
+            }
+        }
+        if(showM==6){
+            for(Students s : stu){
+                s.setjun(-1);
+            }
+        }
+        if(showM==7){
+            for(Students s : stu){
+                s.setjul(-1);
+            }
+        }
+        if(showM==8){
+            for(Students s : stu){
+                s.setaug(-1);
+            }
+        }
+        if(showM==9){
+            for(Students s : stu){
+                s.setsep(-1);
+            }
+        }
+        if(showM==10){
+            for(Students s : stu){
+                s.setoct(-1);
+            }
+        }
+        if(showM==11){
+            for(Students s : stu){
+                s.setnov(-1);
+            }
+        }
+        if(showM==12){
+            for(Students s : stu){
+                s.setdec(-1);
+            }
+        }
+        realm.commitTransaction();
+        Intent intent=new Intent(getApplicationContext(), calendar.class);
+        startActivity(intent);
+
+    }
+
 
     private void CreateView(){
         //Adapter 생성
@@ -76,11 +179,34 @@ public class paymentList extends AppCompatActivity {
     }
 
     private void getStudent(){
-        realm=Realm.getDefaultInstance();
-        studentlist=new ArrayList<>();
-
-        stu = realm.where(Students.class).findAll();
         if(stu.size()>0)
             studentlist.addAll(realm.copyFromRealm(stu));
     }
+
+    //다음달 버튼 눌렀을 때
+    public void nextmon(View view) {
+        showM++;
+        if(showM>12){
+            showM-=12;
+        }
+        tv_payment_month.setText(showM+"월");
+        Log.i("gooddes", String.valueOf(showM));
+
+        CreateView();
+    }
+
+
+    //이전 달 버튼 눌렀을 때
+    public void premon(View view) {
+        showM--;
+        if(showM<1){
+            showM+=12;
+        }
+        tv_payment_month.setText(showM+"월");
+        Log.i("gooddes", String.valueOf(month));
+
+        CreateView();
+    }
+
+
 }
