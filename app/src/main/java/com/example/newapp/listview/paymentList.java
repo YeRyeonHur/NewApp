@@ -23,6 +23,8 @@ import com.example.newapp.database.Students;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -60,8 +62,20 @@ public class paymentList extends AppCompatActivity {
         save = (Button)findViewById(R.id.save);
 
         realm=Realm.getDefaultInstance();
+
+        /*stu = realm.where(Students.class).equalTo("paymentchk",true).findAll();
+        for(Students s:stu){
+            s.setPaymentchk(false);
+        }
+        stu = realm.where(Students.class).equalTo("paid",true).findAll();
+        for(Students s:stu){
+            s.setPaid(false);
+        }
+        realm.commitTransaction();*/
         stu = realm.where(Students.class).findAll();
         getStudent();
+        //날짜 순서대로 정렬하기
+        Collections.sort(studentlist, sortBydate);
         CreateView();
 
 
@@ -228,5 +242,11 @@ public class paymentList extends AppCompatActivity {
         CreateView();
     }
 
+    private final static Comparator<Students> sortBydate = new Comparator<Students>() {
+        @Override
+        public int compare(Students o1, Students o2) {
+            return Integer.compare(o1.getDate(),o2.getDate());
+        }
+    };
 
 }
