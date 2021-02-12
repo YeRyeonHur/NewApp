@@ -294,6 +294,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -304,6 +306,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -314,6 +318,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -324,6 +330,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -334,6 +342,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -344,6 +354,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -354,6 +366,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -364,6 +378,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -374,6 +390,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -384,6 +402,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -394,6 +414,8 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
                 }
                 else{
                     paycheck.setChecked(false);
@@ -404,6 +426,9 @@ public class MyAdapter extends BaseAdapter{
                 if(checking==1){
                     paycheck.setChecked(true);
                     paycheck.setText("결제 완료");
+                    sendBtn.setImageResource(R.drawable.send_off);
+                    sendBtn.setClickable(false);
+
                 }
                 else{
                     paycheck.setChecked(false);
@@ -418,7 +443,7 @@ public class MyAdapter extends BaseAdapter{
                     realm.beginTransaction();
                     stu = realm.where(Students.class).equalTo("std_id", Integer.parseInt(idText.getText().toString())).findFirst();
                     if(paycheck.isChecked()){
-                        sendBtn.setImageResource(R.drawable.send);
+                        sendBtn.setImageResource(R.drawable.send_off);
                         if(showmonth==1){ stu.setjan(1); }
                         if(showmonth==2){ stu.setfab(1); }
                         if(showmonth==3){ stu.setmar(1); }
@@ -432,9 +457,10 @@ public class MyAdapter extends BaseAdapter{
                         if(showmonth==11){ stu.setnov(1); }
                         if(showmonth==12){ stu.setdec(1); }
                         paycheck.setText("결제 완료");
+                        sendBtn.setClickable(false);
                     }
                     else{
-                        sendBtn.setImageResource(R.drawable.send_off);
+                        sendBtn.setImageResource(R.drawable.send);
                         paycheck.setText("결제 필요");
                         if(showmonth==1){ stu.setjan(-1); }
                         if(showmonth==2){ stu.setfab(-1); }
