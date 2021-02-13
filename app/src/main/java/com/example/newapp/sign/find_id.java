@@ -2,6 +2,7 @@ package com.example.newapp.sign;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -16,6 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.newapp.R;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+
+import java.util.HashMap;
 
 public class find_id extends AppCompatActivity {
     //아이디찾기
@@ -43,6 +48,9 @@ public class find_id extends AppCompatActivity {
             public void onClick(View v) {
                 String academ_name=academy_name.getText().toString().trim();
                 String nam=name.getText().toString().trim();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
 
                 //확인하기
                 //알려주기

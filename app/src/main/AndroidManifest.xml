@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewApp">
-        <activity android:name="com.example.newapp.info.add_std">
+        <activity android:name="com.example.newapp.calendar_page.calendar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,8 @@
         </activity>
         <activity android:name="com.example.newapp.calendar_page.popup_activity" android:theme="@android:style/Theme.Dialog" />
        <activity android:name="com.example.newapp.listview.studentList"></activity>
-        <activity android:name="com.example.newapp.calendar_page.calendar"></activity>
         <activity android:name="com.example.newapp.sign.login"></activity>
+        <activity android:name="com.example.newapp.info.add_std"></activity>
         <activity android:name="com.example.newapp.sign.Register"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name="com.example.newapp.sign.find_id"></activity>
