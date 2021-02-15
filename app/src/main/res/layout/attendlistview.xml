@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,8 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/today_date"
-        android:textSize="20dp"
+        android:textSize="40dp"
         android:text="출석 체크"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,21 +27,30 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="검색 : "
-            android:textSize="18dp"
+            android:textSize="22dp"
             android:gravity="center"/>
         <EditText
             android:id="@+id/edittxt"
             android:hint="이름을 입력하세요."
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textSize="22dp"
             android:layout_weight="5"
             />
 
+        <Button
+            android:id="@+id/attend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clicked_attend"
+            android:text="출석"
+            android:textSize="22dp"
+            app:backgroundTint="#EDB335" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
 
@@ -43,43 +58,49 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="28dp"
             android:text="명단"
+            android:background="@drawable/border_right"
             android:gravity="center"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="28dp"
             android:text="등원시각"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:background="@drawable/border_right"/>
 
-        <Button
+        <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/attend_btn"
-            android:clickable="true"
-            android:onClick="clicked_attend"
-            android:backgroundTint="@color/white"
-            android:foreground="@drawable/ic_baseline_event_available_24"/>
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_baseline_event_available_24"
+            android:scaleType="centerInside"
+            android:background="@drawable/border_right"/>
 
-        <Button
+        <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/send_btn"
-            android:backgroundTint="@color/white"
-            android:foreground="@drawable/ic_baseline_email_24" />
-
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_baseline_email_24"
+            android:scaleType="centerInside" />
     </LinearLayout>
 
 
-    <ListView
-        android:id="@+id/listview2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"
-        android:textFilterEnabled="true"/>
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/listview2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:choiceMode="multipleChoice"
+            android:textFilterEnabled="true"/>
+    </LinearLayout>
+
 </LinearLayout>
