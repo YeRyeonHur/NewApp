@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -153,6 +154,7 @@ public class Register extends AppCompatActivity {
                                             String email = user.getEmail();
                                             String uid = user.getUid();
                                             String name = mName.getText().toString().trim();
+                                            String academy=mAcademyname.getText().toString().trim();
 
                                             //Hash MAp 테이블을 파이어베이스 데이터베이스에 저장
                                             HashMap<Object, String> hashMap = new HashMap<>();
@@ -163,7 +165,10 @@ public class Register extends AppCompatActivity {
 
                                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                                             DatabaseReference reference = database.getReference("Users");
-                                            reference.child(uid).setValue(hashMap);
+                                            reference.child(academy+name).setValue(hashMap);
+                                           // Toast.makeText(Register.this,"스트링"+mAcademyname.toString()+name,Toast.LENGTH_SHORT);
+                                            //Log.i("스트링:",mAcademyname.toString()+name);
+                                            //reference.child(mAcademyname.toString()+name).setValue(email);
 
                                             //가입이 이루어졌을 시 가입 화면 빠져나감.
                                             Intent intent = new Intent(Register.this, MainActivity.class);
