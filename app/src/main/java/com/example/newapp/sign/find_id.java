@@ -57,6 +57,8 @@ public class find_id extends AppCompatActivity {
                // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 FirebaseDatabase database=FirebaseDatabase.getInstance();
                 DatabaseReference myRef=database.getReference("Users");
+                String email= myRef.child(academ_name+nam).getDatabase().toString();
+                Log.i("email: ",email);
                 myRef.orderByChild("name").equalTo(nam).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
