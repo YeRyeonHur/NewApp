@@ -72,7 +72,7 @@ public class find_id extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });*/
+                });
 
                 //확인하기
                 //알려주기
