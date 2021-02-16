@@ -142,7 +142,7 @@ public class Register extends AppCompatActivity {
 
                         //파이어베이스에 신규계정 등록하기(회원가입)
                         firebaseAuth.createUserWithEmailAndPassword(id, pwd).addOnCompleteListener(
-                                Register.this, new OnCompleteListener<AuthResult>() {
+                                com.example.newapp.sign.Register.this, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         //가입 성공시
