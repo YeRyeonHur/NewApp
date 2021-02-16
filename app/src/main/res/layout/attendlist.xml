@@ -3,7 +3,8 @@
     android:id="@+id/attendlist"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,8 @@
             android:id="@+id/attend_std_id"
             android:layout_width="1dp"
             android:visibility="gone"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/Name"
@@ -23,7 +25,8 @@
             android:layout_weight="2"
             android:text=" "
             android:textSize="25dp"
-            android:background="@drawable/border_right"/>
+            android:background="@drawable/border_right"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/Time"
@@ -32,13 +35,16 @@
             android:layout_weight="2"
             android:text=" "
             android:textSize="25dp"
-            android:background="@drawable/border_right"/>
+            android:gravity="center"
+            android:background="@drawable/border_right"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@drawable/border_right">
 
             <CheckBox
                 android:id="@+id/checkBox1"
@@ -67,7 +73,7 @@
             android:layout_height="30dp"
             android:src="@drawable/send"
             android:scaleType="centerInside"
-            android:background="@android:color/transparent"
+            android:background="@android:color/white"
             android:padding="3dp"/>
 
         <TextView
