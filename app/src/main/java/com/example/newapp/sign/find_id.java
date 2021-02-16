@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.example.newapp.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -48,9 +54,23 @@ public class find_id extends AppCompatActivity {
             public void onClick(View v) {
                 String academ_name=academy_name.getText().toString().trim();
                 String nam=name.getText().toString().trim();
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+               // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase database=FirebaseDatabase.getInstance();
+                DatabaseReference myRef=database.getReference("Users");
+                myRef.orderByChild("name").equalTo(nam).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot childDataSnapshot:snapshot.getChildren()){
+                            String email=childDataSnapshot.child("email").getValue().toString();
+                            Log.i("email: ",email);
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
+                    }
+                });
 
                 //확인하기
                 //알려주기
