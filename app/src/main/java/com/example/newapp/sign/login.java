@@ -2,13 +2,16 @@ package com.example.newapp.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newapp.calendar_page.calendar;
+import com.example.newapp.database.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +28,7 @@ public class login extends AppCompatActivity {
     TextView find_id, find_password, join;
     private FirebaseAuth firebaseAuth;
     String Id, Pass;
+    CheckBox autoLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,28 @@ public class login extends AppCompatActivity {
         find_id = findViewById(R.id.find_id);
         join = findViewById(R.id.join);
         firebaseAuth = FirebaseAuth.getInstance();
+        autoLogin = findViewById(R.id.auto_login);
+
+        //자동로그인
+        boolean check_auto = PreferenceManager.getBoolean(this, "auto_login");
+        if(check_auto){
+            String saved_Id = PreferenceManager.getString(this, "user_id");
+            String saved_Password = PreferenceManager.getString(this, "user_pw");
+            firebaseAuth.signInWithEmailAndPassword(saved_Id, saved_Password).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(login.this, "자동로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(login.this, calendar.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(login.this,"자동로그인 실패. 수동으로 로그인 해주세요.",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         //로그인 버튼 리스너
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,9 +72,15 @@ public class login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            if(autoLogin.isChecked()){
+                                PreferenceManager.setString(login.this, "user_id", Id);
+                                PreferenceManager.setString(login.this, "user_pw", Pass);
+                                PreferenceManager.setBoolean(login.this, "auto_login", true);
+                            }
+
                             Intent intent = new Intent(login.this, calendar.class);
                             startActivity(intent);
-
+                            finish();
                         }else{
                             Toast.makeText(login.this,"아이디/비밀번호를 다시 확인해주세요",Toast.LENGTH_SHORT).show();
                         }
