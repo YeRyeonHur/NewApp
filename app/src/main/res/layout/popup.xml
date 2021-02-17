@@ -23,7 +23,8 @@
 
     <!-- Notice -->
     <LinearLayout
-        android:padding="24dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,7 +36,23 @@
             android:gravity="center"
             android:layout_marginBottom="3dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <DatePicker
+            android:id="@+id/idDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+        <EditText
+            android:gravity="center"
+            android:id="@+id/newDayMemo"
+            android:hint="메모"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </LinearLayout>
     <!-- Notice -->
 

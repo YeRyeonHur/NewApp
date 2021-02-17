@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ public class popup_activity extends Activity {
     TextView txtText;
     Button click;
     TextView date_show;
+    DatePicker datePicker;
+    EditText newDayMemo;
     //정렬
     int[] sort = new int[100];
 
@@ -45,7 +49,8 @@ public class popup_activity extends Activity {
         date_show=(TextView)findViewById(R.id.show_date);//윗칸 날짜보여주는 칸
         txtText = (TextView)findViewById(R.id.txtText);
         click = (Button)findViewById(R.id.close);
-
+        datePicker = (DatePicker)findViewById(R.id.idDatePicker);
+        newDayMemo = (EditText)findViewById(R.id.newDayMemo);
 
         //데이터 가져오기
         Intent intent = getIntent();
@@ -57,6 +62,20 @@ public class popup_activity extends Activity {
         String info=intent.getStringExtra("Info");
         txtText.setText(info);
 
+        String stu_Name = intent.getStringExtra("stu_Name");
+
+        //날짜 선택 팝업인지?
+        int isNewDate = intent.getIntExtra("new_date?",0);
+        //날짜 선택 팝업이면 날짜 선택 보이게 하기
+        if(isNewDate==1){
+            DatePicker datePicker = (DatePicker)findViewById(R.id.idDatePicker);
+            datePicker.setVisibility(View.VISIBLE);
+            newDayMemo.setVisibility(View.VISIBLE);
+            date_show.setText(stu_Name);
+        }
+
+        String new_date = datePicker.getYear() + "/" + datePicker.getMonth() + "/" + datePicker.getDayOfMonth();
+
         //무슨 날짜 선택한지 받기
         int final_day = intent.getIntExtra("spec", 0);
 
@@ -67,6 +86,11 @@ public class popup_activity extends Activity {
         String paying="결제 필요"+"\n";
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Students> stu;
+
+        //달력에서 선택 했을 때 텍스트뷰 보이게 함
+        if(final_day!=0){
+            txtText.setVisibility(View.VISIBLE);
+        }
         //결제날짜랑 요일 일치하면 paying에 추가
         stu = realm.where(Students.class).equalTo("date", final_day).findAll();
         int count = stu.size();
@@ -252,6 +276,7 @@ public class popup_activity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent();
+                intent.putExtra("new_date",new_date);//원래는 이 줄 없었음.. test용
                 setResult(RESULT_OK, intent);
 
                 //액티비티(팝업) 닫기
