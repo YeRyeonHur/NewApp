@@ -73,7 +73,7 @@ public class popup_activity extends Activity {
             newDayMemo.setVisibility(View.VISIBLE);
             date_show.setText(stu_Name);
         }
-
+        //test용 없어도됨
         String new_date = datePicker.getYear() + "/" + datePicker.getMonth() + "/" + datePicker.getDayOfMonth();
 
         //무슨 날짜 선택한지 받기
