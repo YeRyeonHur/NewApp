@@ -1,5 +1,6 @@
 package com.example.newapp.sign;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,10 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.example.newapp.R;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -37,6 +40,9 @@ public class find_id extends AppCompatActivity {
     private Button pw_But;
     private FirebaseAuth firebaseAuth;
 
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,21 +54,60 @@ public class find_id extends AppCompatActivity {
         pw_But = findViewById(R.id.pw_check);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        builder=new AlertDialog.Builder(find_id.this);
+
         //아이디 찾기 눌렀을때
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String academ_name=academy_name.getText().toString().trim();
-                String nam=name.getText().toString().trim();
-               // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                FirebaseDatabase database=FirebaseDatabase.getInstance();
-                DatabaseReference myRef=database.getReference("Users");
-                myRef.orderByChild("name").equalTo(nam).addListenerForSingleValueEvent(new ValueEventListener() {
+                String academ_name = academy_name.getText().toString().trim();
+                String nam = name.getText().toString().trim();
+                // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Users");
+
+                final String[] target = new String[1];
+                int[] flag = new int[1];
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot childDataSnapshot:snapshot.getChildren()){
-                            String email=childDataSnapshot.child("email").getValue().toString();
-                            Log.i("email: ",email);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                            String name=childDataSnapshot.child("name").getValue().toString().trim();
+                            String academy = childDataSnapshot.child("academy").getValue().toString().trim();
+
+                            if (academy.equals(academ_name) && name.equals(nam)) {
+
+                               target[0] = String.valueOf(childDataSnapshot.child("email").getValue());
+                                builder.setTitle("알림").setMessage("귀하의 아이디는 " + target[0] + " 입니다.");
+                                builder.setPositiveButton("확인",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                alertDialog = builder.create();
+                                alertDialog.show();
+                               flag[0]=1;
+                               break;
+                            }
+
+                        }
+                        if(flag[0]==0){
+                            builder.setTitle("알림").setMessage("아이디가 존재하지 않습니다.");
+                            builder.setPositiveButton("확인",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            alertDialog = builder.create();
+                            alertDialog.show();
                         }
                     }
 
@@ -72,10 +117,10 @@ public class find_id extends AppCompatActivity {
                     }
                 });
 
-                //확인하기
-                //알려주기
-            }
-        });
+
+            }});
+
+
 
         //비밀번호 찾기 눌렀을 때
         pw_But.setOnClickListener(new View.OnClickListener(){
