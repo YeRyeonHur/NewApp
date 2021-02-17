@@ -113,6 +113,9 @@ public class attenList extends AppCompatActivity {
                 TextView txtResult=(TextView)findViewById(R.id.txtText);
                 Intent intent=new Intent(getApplicationContext(), popup_activity.class);
                 intent.putExtra("stu_Name", students.getName());
+                intent.putExtra("cur_year", cal.get(Calendar.YEAR));
+                intent.putExtra("cur_month", cal.get(Calendar.MONTH));
+                intent.putExtra("cur_date", cal.get(Calendar.DATE));
                 intent.putExtra("new_date?",1);
                 startActivity(intent);
 
@@ -120,7 +123,6 @@ public class attenList extends AppCompatActivity {
                 //test 용 (없애도 됨)
                 Intent date_intent = getIntent();
                 String new_date = date_intent.getStringExtra("new_date");
-                Toast.makeText(getApplicationContext(),new_date,Toast.LENGTH_LONG).show();
             }
         }));
 

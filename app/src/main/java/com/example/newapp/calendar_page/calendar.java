@@ -186,7 +186,7 @@ public class calendar extends AppCompatActivity {
                 intent.putExtra("spec", day);
 
                 intent.putExtra("data",final_date);
-
+                intent.putExtra("new_date?",2);
 
 
                 intent.putExtra("day_of_week", calc);
