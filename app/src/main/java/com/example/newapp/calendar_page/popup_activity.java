@@ -64,7 +64,17 @@ public class popup_activity extends Activity {
 
 
         String info=intent.getStringExtra("Info");
-        txtText.setText(info);
+        if(info!=null) {
+            txtText.setText(info);
+            txtText.setVisibility(View.VISIBLE);
+
+            click.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
 
         String stu_Name = intent.getStringExtra("stu_Name");
 
