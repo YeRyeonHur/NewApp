@@ -1,5 +1,6 @@
 package com.example.newapp.sign;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -47,15 +48,22 @@ public class login extends AppCompatActivity {
         if(check_auto){
             String saved_Id = PreferenceManager.getString(this, "user_id");
             String saved_Password = PreferenceManager.getString(this, "user_pw");
+            ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setMessage("로그인 중...");
+            dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+            dialog.show();
+
             firebaseAuth.signInWithEmailAndPassword(saved_Id, saved_Password).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(login.this, "자동로그인 되었습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(login.this, calendar.class);
+                        dialog.dismiss();
                         startActivity(intent);
                         finish();
                     }else{
+                        dialog.dismiss();
                         Toast.makeText(login.this,"자동로그인 실패. 수동으로 로그인 해주세요.",Toast.LENGTH_SHORT).show();
                     }
                 }

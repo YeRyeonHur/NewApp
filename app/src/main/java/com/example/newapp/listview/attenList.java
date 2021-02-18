@@ -34,6 +34,7 @@ import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class attenList extends AppCompatActivity {
     private ListView listview;
@@ -118,34 +119,36 @@ public class attenList extends AppCompatActivity {
         studentlist=new ArrayList<>();
 
         if(day_of_week==1){//일
-            stu = realm.where(Students.class).notEqualTo("sun", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("sun", -1).findAll().sort("sun", Sort.ASCENDING);
 
         }
         else if(day_of_week==2){//월
-            stu = realm.where(Students.class).notEqualTo("mon", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("mon", -1).findAll().sort("mon", Sort.ASCENDING);
 
         }
         else if(day_of_week==3){//화
-            stu = realm.where(Students.class).notEqualTo("tue", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("tue", -1).findAll().sort("tue", Sort.ASCENDING);
 
         }
         else if(day_of_week==4){//수
-            stu = realm.where(Students.class).notEqualTo("wed", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("wed", -1).findAll().sort("wed", Sort.ASCENDING);
 
         }
         else if(day_of_week==5){//목
-            stu = realm.where(Students.class).notEqualTo("thu", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("thu", -1).findAll().sort("thu", Sort.ASCENDING);
 
         }
         else if(day_of_week==6){//금
-            stu = realm.where(Students.class).notEqualTo("fri", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("fri", -1).findAll().sort("fri", Sort.ASCENDING);
         }
         else {//토
-            stu = realm.where(Students.class).notEqualTo("sat", -1).findAll();
+            stu = realm.where(Students.class).notEqualTo("sat", -1).findAll().sort("sat", Sort.ASCENDING);
         }
 
-        if(stu.size()>0)
+        if(stu.size()>0){
             studentlist.addAll(realm.copyFromRealm(stu));
+        }
+
     }
 
     //출석 체크 버튼을 눌렀을 때

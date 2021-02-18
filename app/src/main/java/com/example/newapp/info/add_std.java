@@ -83,8 +83,6 @@ public class add_std extends AppCompatActivity {
         back_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(add_std.this, calendar.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -286,8 +284,6 @@ public class add_std extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //메인으로 돌아감
-                    Intent intent = new Intent(add_std.this, calendar.class);
-                    startActivity(intent);
                     finish();
                 }
             });

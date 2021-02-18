@@ -14,11 +14,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.newapp.info.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
+import com.example.newapp.calendar_page.calendar;
 import com.example.newapp.calendar_page.popup_activity;
 import com.example.newapp.database.Students;
 import com.example.newapp.info.add_std;
@@ -208,4 +210,8 @@ public class studentList extends AppCompatActivity{
         });
     }
 
+    public void add_page(View v){
+        Intent intent = new Intent(studentList.this, add_std.class);
+        startActivity(intent);
+    }
 }

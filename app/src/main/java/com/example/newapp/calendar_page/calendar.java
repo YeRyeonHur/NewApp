@@ -27,6 +27,7 @@ import com.example.newapp.R;
 import com.example.newapp.database.Students;
 import com.example.newapp.listview.attenList;
 import com.example.newapp.listview.paymentList;
+import com.example.newapp.listview.studentList;
 import com.example.newapp.sign.login;
 
 import java.text.SimpleDateFormat;
@@ -77,6 +78,7 @@ public class calendar extends AppCompatActivity {
     private long backKeyPressedTime = 0;
     private Toast toast;
     private Button att_btn;
+    private Button list_btn;
 
     final int MY_PERMISSION_SEND_MESSAGE = 1;
 
@@ -204,9 +206,14 @@ public class calendar extends AppCompatActivity {
         });
 
 
-
-
-
+        list_btn = findViewById(R.id.list_btn);
+        list_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(calendar.this, studentList.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
