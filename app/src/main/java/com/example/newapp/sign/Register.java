@@ -159,16 +159,14 @@ public class Register extends AppCompatActivity {
                                             //Hash MAp 테이블을 파이어베이스 데이터베이스에 저장
                                             HashMap<Object, String> hashMap = new HashMap<>();
 
-                                            hashMap.put("uid", uid);
+                                            hashMap.put("academy", academy);
                                             hashMap.put("email", email);
                                             hashMap.put("name", name);
 
+
                                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                                             DatabaseReference reference = database.getReference("Users");
-                                            reference.child(academy+name).setValue(hashMap);
-                                           // Toast.makeText(Register.this,"스트링"+mAcademyname.toString()+name,Toast.LENGTH_SHORT);
-                                            //Log.i("스트링:",mAcademyname.toString()+name);
-                                            //reference.child(mAcademyname.toString()+name).setValue(email);
+                                            reference.push().setValue(hashMap);
 
                                             //가입이 이루어졌을 시 가입 화면 빠져나감.
                                             Intent intent = new Intent(Register.this, MainActivity.class);

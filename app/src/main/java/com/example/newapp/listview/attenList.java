@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
 import com.example.newapp.calendar_page.calendar;
+import com.example.newapp.calendar_page.popup_activity;
 import com.example.newapp.database.PreferenceManager;
 import com.example.newapp.database.Students;
 import com.example.newapp.info.add_std;
@@ -102,6 +104,29 @@ public class attenList extends AppCompatActivity {
                 adapter.filter(text);
             }
         });
+
+
+        //listview 클릭시 --> 팝업
+        listview.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Students students=(Students)parent.getItemAtPosition(position);
+                TextView txtResult=(TextView)findViewById(R.id.txtText);
+                Intent intent=new Intent(getApplicationContext(), popup_activity.class);
+                intent.putExtra("stu_Name", students.getName());
+                intent.putExtra("cur_year", cal.get(Calendar.YEAR));
+                intent.putExtra("cur_month", cal.get(Calendar.MONTH));
+                intent.putExtra("cur_date", cal.get(Calendar.DATE));
+                intent.putExtra("new_date?",1);
+                startActivity(intent);
+
+
+                //test 용 (없애도 됨)
+                Intent date_intent = getIntent();
+                String new_date = date_intent.getStringExtra("new_date");
+            }
+        }));
+
     }
 
     private void CreateView(){
