@@ -284,6 +284,7 @@ public class add_std extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //메인으로 돌아감
+                    setResult(RESULT_OK,intent);
                     finish();
                 }
             });

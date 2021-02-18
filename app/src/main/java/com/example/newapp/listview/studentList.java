@@ -36,7 +36,6 @@ public class studentList extends AppCompatActivity{
     private ListView listview;
     private MyAdapter adapter;
     private EditText editTextFilter;
-    private Button searchbtn;
     private  Realm realm;
 
     private ArrayList<Students> studentlist;
@@ -144,7 +143,7 @@ public class studentList extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case 1003:
+            case 1003: case 1004:
                 if (resultCode == RESULT_OK) {
                     readData();
                     adapter.notifyDataSetChanged();
@@ -211,7 +210,8 @@ public class studentList extends AppCompatActivity{
     }
 
     public void add_page(View v){
-        Intent intent = new Intent(studentList.this, add_std.class);
-        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), add_std.class);
+        startActivityForResult(intent,1004);
+
     }
 }
