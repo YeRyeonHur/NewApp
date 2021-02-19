@@ -126,11 +126,9 @@ public class MyAdapter extends BaseAdapter{
             nameText = (TextView) convertView.findViewById(R.id.Name);
             ageText = (TextView) convertView.findViewById(R.id.Age);
             phoneText = (TextView) convertView.findViewById(R.id.Phone);
-            dateText = (TextView) convertView.findViewById(R.id.date);
-            nameText.setText("이름: "+ students.getName());
-            ageText.setText("나이: " + students.getAge());
-            phoneText.setText("핸드폰: " + students.getPhone());
-            dateText.setText("결제 날짜: " + students.getDate());
+            nameText.setText(students.getName());
+            ageText.setText(students.getAge() + "");
+            phoneText.setText(students.getPhone() + "(" + students.getPar_phone() + ")");
         }
         else if(what==1){
             nameText=(TextView)convertView.findViewById(R.id.Name);
