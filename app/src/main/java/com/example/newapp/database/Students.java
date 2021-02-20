@@ -12,8 +12,7 @@ public class Students extends RealmObject implements Serializable {
     private int age;
     private String par_name, par_phone;
     private String memo;
-    private boolean attendchk, attended;
-    private boolean sendchk, sent;
+    private boolean attendchk, attended, addattend;
     private int jan, fab, mar, apr, may, jun, jul, aug, sep, oct, nov, dec;
 
     public Students(String name, int age, String phone, int date){
@@ -22,13 +21,13 @@ public class Students extends RealmObject implements Serializable {
         this.phone=phone;
         this.date=date;
         mon = tue = wed = thu = fri = sat = sun = -1;
-        attendchk = attended = sendchk = sent = false;
+        attendchk = attended = addattend = false;
         jan = fab = mar = apr = may = jun = jul = aug = sep = oct = nov = dec = -1;
     }
 
     public Students(){
         mon = tue = wed = thu = fri = sat = sun = -1;
-        attendchk = attended = sendchk = sent = false;
+        attendchk = attended = addattend = false;
         jan = fab = mar = apr = may = jun = jul = aug = sep = oct = nov = dec = -1;
     }
 
@@ -69,8 +68,7 @@ public class Students extends RealmObject implements Serializable {
     public int getStd_id(){return std_id;}
     public boolean getAttendchk() {return attendchk;}
     public boolean getAttended() {return attended;}
-    public boolean getSendchk() {return sendchk;}
-    public boolean getSent() {return sent;}
+    public boolean getAddattended(){return addattend;}
 
     public String getInfo(){
 
@@ -117,12 +115,6 @@ public class Students extends RealmObject implements Serializable {
     }
     public void setAttended(boolean attended){
         this.attended = attended;
-    }
-    public void setSendchk(boolean sendchk){
-        this.sendchk = sendchk;
-    }
-    public void setSent(boolean sent){
-        this.sent = sent;
     }
     public void setjan(int n){this.jan = n; }
     public void setfab(int n){this.fab = n;}
