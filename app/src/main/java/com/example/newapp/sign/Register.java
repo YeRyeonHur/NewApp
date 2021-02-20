@@ -169,7 +169,7 @@ public class Register extends AppCompatActivity {
                                             reference.push().setValue(hashMap);
 
                                             //가입이 이루어졌을 시 가입 화면 빠져나감.
-                                            Intent intent = new Intent(Register.this, MainActivity.class);
+                                            Intent intent = new Intent(Register.this, com.example.newapp.calendar_page.calendar.class);
                                             startActivity(intent);
                                             finish();
                                             Toast.makeText(Register.this, "회원이 되셨습니다.!!", Toast.LENGTH_SHORT).show();

@@ -19,16 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.newapp.calendar_page.popup_activity" android:theme="@android:style/Theme.Dialog" />
-       <activity android:name="com.example.newapp.listview.studentList"></activity>
-        <activity android:name="com.example.newapp.calendar_page.calendar"></activity>
-        <activity android:name="com.example.newapp.info.add_std"></activity>
         <activity android:name="com.example.newapp.sign.find_id"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name="com.example.newapp.sign.Register"></activity>
 
+        <activity android:name="com.example.newapp.calendar_page.popup_activity" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name="com.example.newapp.calendar_page.calendar"></activity>
+
+        <activity android:name="com.example.newapp.listview.studentList"></activity>
         <activity android:name="com.example.newapp.listview.attenList"></activity>
         <activity android:name="com.example.newapp.listview.paymentList"></activity>
 
+        <activity android:name="com.example.newapp.info.add_std"></activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
