@@ -44,8 +44,8 @@
             android:text="아이디 찾기"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            app:backgroundTint="#A3A1A1"
-            app:rippleColor="#9F8E8E" />
+            app:backgroundTint="#EDB335"
+            app:rippleColor="#EDB335" />
     </LinearLayout>
 
     <ImageView
@@ -84,8 +84,8 @@
             android:text="비밀번호 찾기"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            app:backgroundTint="#A3A1A1"
-            app:rippleColor="#9F8E8E" />
+            app:backgroundTint="#EDB335"
+            app:rippleColor="#EDB335" />
         </LinearLayout>
 
 </LinearLayout>
