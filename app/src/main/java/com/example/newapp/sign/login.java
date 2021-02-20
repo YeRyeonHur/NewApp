@@ -112,7 +112,7 @@ public class login extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //아이디 찾기 화면으로 넘어감
+                //회원가입 화면으로 넘어감
                 Intent intent = new Intent(login.this, com.example.newapp.sign.Register.class); //this 대신 getActivity()
                 startActivity(intent);
             }
