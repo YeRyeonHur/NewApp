@@ -191,11 +191,12 @@ public class attenList extends AppCompatActivity {
                 realm.beginTransaction();
 
                 for(Students student : attendstudents){
-                    Log.i("아이디", student.getStd_id() + "");
+                   // Log.i("아이디", student.getStd_id() + "");
                     student.setAttended(true);
                     student.setAttendchk(false);
                     today_attend_id.add(student.getStd_id() + "");
                 }
+                PreferenceManager.setArrayList(attenList.this, saved_date + "attend", today_attend_id);
                 realm.commitTransaction();
                 adapter.notifyDataSetChanged();
                 getStudent();
