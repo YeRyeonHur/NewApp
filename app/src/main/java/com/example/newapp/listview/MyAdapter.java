@@ -29,7 +29,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.newapp.R;
-import com.example.newapp.calendar_page.calendar;
 import com.example.newapp.database.Students;
 import com.example.newapp.info.add_std;
 
@@ -108,6 +107,10 @@ public class MyAdapter extends BaseAdapter{
             else if(what==2){
                 convertView=mLayoutInflater.inflate(R.layout.paymentlist,parent,false);
             }
+            else if(what==4){
+                convertView=mLayoutInflater.inflate(R.layout.attendnottoday,parent,false);
+
+            }
         }
 
         TextView nameText;
@@ -129,6 +132,38 @@ public class MyAdapter extends BaseAdapter{
             nameText.setText(students.getName());
             ageText.setText(students.getAge() + "");
             phoneText.setText(students.getPhone() + "(" + students.getPar_phone() + ")");
+        }
+        else if(what==4){
+            nameText=(TextView)convertView.findViewById(R.id.Name);
+            nameText.setText(students.getName());
+            timeText = convertView.findViewById(R.id.Time);
+            //등원 시각 표시
+            int dow;
+            if(day_of_week==1){//일
+                dow = students.getSun();
+            }
+            else if(day_of_week==2){//월
+                dow = students.getMon();
+            }
+            else if(day_of_week==3){//화
+                dow = students.getTue();
+            }
+            else if(day_of_week==4){//수
+                dow = students.getWed();
+            }
+            else if(day_of_week==5){//목
+                dow = students.getThu();
+            }
+            else if(day_of_week==6){//금
+                dow = students.getFri();
+            }
+            else {//토
+                dow = students.getSat();
+            }
+
+            timeText.setText(dow/100 + " : " + dow % 100);
+
+
         }
         else if(what==1){
             nameText=(TextView)convertView.findViewById(R.id.Name);

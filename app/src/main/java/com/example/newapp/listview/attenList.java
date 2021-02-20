@@ -1,6 +1,7 @@
 package com.example.newapp.listview;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +32,19 @@ import com.example.newapp.database.PreferenceManager;
 import com.example.newapp.database.Students;
 import com.example.newapp.info.add_std;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -42,6 +52,7 @@ public class attenList extends AppCompatActivity {
     private ListView listview;
     private MyAdapter adapter;
     private EditText editTextFilter;
+    private EditText edit_memo;
     private Realm realm;
     private RealmResults<Students> stu;
     private ArrayList<Students> studentlist;
@@ -49,22 +60,35 @@ public class attenList extends AppCompatActivity {
     private TextView today_date_text;
     private String saved_date, new_date;
     private ArrayList<String> today_attend_id;
-
+    private int month, day;
+    private Calendar cal;
+    int showday, showmonth;
+    Calendar calcul_cal;
+    String file, file_name;
+    ImageView check_date, check_message;
+    Button add_memo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendlistview);
 
-        Calendar cal=Calendar.getInstance();
 
+        check_date = findViewById(R.id.check_date);
+        check_message = findViewById(R.id.check_message);
+        cal=Calendar.getInstance();
+        calcul_cal= Calendar.getInstance();
         today_date_text = findViewById(R.id.today_date);
         int month = cal.get(Calendar.MONTH) + 1;
         today_date_text.setText(" " + month + "월 " + cal.get(Calendar.DATE) + "일 출석");
-
+        edit_memo = findViewById(R.id.show_memo);
         realm=Realm.getDefaultInstance();
+        add_memo = findViewById(R.id.add_memo);
 
         saved_date = PreferenceManager.getString(this, "attend_date");
         new_date = cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DATE);
+        day = cal.get(Calendar.DATE);
+        showmonth = month;
+        showday = day;
         if (!saved_date.equals(new_date)) {
             PreferenceManager.setString(this, "attend_date", new_date);
             realm.beginTransaction();
@@ -80,10 +104,38 @@ public class attenList extends AppCompatActivity {
         }
         //오늘 출석한 학생들의 id를 불러온다
         today_attend_id = PreferenceManager.getArrayList(this, saved_date + "attend");
-
+        file_name = calcul_cal.get(Calendar.MONTH)+""+calcul_cal.get(Calendar.DATE);
+        read_memo(file_name);
         getStudent();
         CreateView();
         // filtering
+
+        add_memo.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View v) {
+                FileOutputStream fos = null;
+
+                try {
+                    String readDay = calcul_cal.get(Calendar.MONTH)+""+calcul_cal.get(Calendar.DATE)+".txt";
+                    fos = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS); //MODE_WORLD_WRITEABLE
+                    String content = edit_memo.getText().toString();
+
+                    // String.getBytes() = 스트링을 배열형으로 변환?
+                    fos.write(content.getBytes());
+                    //fos.flush();
+                    fos.close();
+
+                    // getApplicationContext() = 현재 클래스.this ?
+
+                } catch (Exception e) { // Exception - 에러 종류 제일 상위 // FileNotFoundException , IOException
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
+
         editTextFilter=(EditText)findViewById(R.id.edittxt);
         editTextFilter.addTextChangedListener(new TextWatcher(){
 
@@ -138,43 +190,52 @@ public class attenList extends AppCompatActivity {
         listview.setAdapter(adapter);
     }
 
+    private void CreatenView(){
+        //Adapter 생성
+        adapter=new MyAdapter(this, studentlist,4);
+
+        // 리스트뷰 참조 및 Apater 달기
+        listview=(ListView)findViewById(R.id.listview2);
+        listview.setAdapter(adapter);
+    }
+
     private void getStudent(){
-        Calendar cal=Calendar.getInstance();
-        int day_of_week=cal.get(Calendar.DAY_OF_WEEK); //오늘 요일 학생들 쿼리
+
+        int day_of_week=calcul_cal.get(Calendar.DAY_OF_WEEK); //오늘 요일 학생들 쿼리
         studentlist=new ArrayList<>();
 
         if(day_of_week==1){//일
-            stu = realm.where(Students.class).notEqualTo("sun", -1).findAll().sort("sun", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("sun", -1).findAll();
 
         }
         else if(day_of_week==2){//월
-            stu = realm.where(Students.class).notEqualTo("mon", -1).findAll().sort("mon", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("mon", -1).findAll();
 
         }
         else if(day_of_week==3){//화
-            stu = realm.where(Students.class).notEqualTo("tue", -1).findAll().sort("tue", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("tue", -1).findAll();
 
         }
         else if(day_of_week==4){//수
-            stu = realm.where(Students.class).notEqualTo("wed", -1).findAll().sort("wed", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("wed", -1).findAll();
 
         }
         else if(day_of_week==5){//목
-            stu = realm.where(Students.class).notEqualTo("thu", -1).findAll().sort("thu", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("thu", -1).findAll();
 
         }
         else if(day_of_week==6){//금
-            stu = realm.where(Students.class).notEqualTo("fri", -1).findAll().sort("fri", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("fri", -1).findAll();
         }
         else {//토
-            stu = realm.where(Students.class).notEqualTo("sat", -1).findAll().sort("sat", Sort.ASCENDING);
+            stu = realm.where(Students.class).notEqualTo("sat", -1).findAll();
         }
 
-        if(stu.size()>0){
+        if(stu.size()>0)
             studentlist.addAll(realm.copyFromRealm(stu));
-        }
-
     }
+
+
 
     //출석 체크 버튼을 눌렀을 때
     public void clicked_attend(View v){
@@ -213,6 +274,88 @@ public class attenList extends AppCompatActivity {
         alert.show();
     }
 
+    public void nextday(View view) {
+        calcul_cal.add(Calendar.DATE, 1);
+        today_date_text.setText(" " + (calcul_cal.get(Calendar.MONTH)+1) + "월 " + calcul_cal.get(Calendar.DATE) + "일 출석");
+        if((calcul_cal.get(Calendar.MONTH)+1)!=(cal.get(Calendar.MONTH)+1)||calcul_cal.get(Calendar.DATE)!=cal.get(Calendar.DATE)){
+            getStudent();
+            CreatenView();
+            check_message.setVisibility(View.GONE);
+            check_date.setVisibility(View.GONE);
+        }
+        if((calcul_cal.get(Calendar.MONTH)+1)==(cal.get(Calendar.MONTH)+1)&&calcul_cal.get(Calendar.DATE)==cal.get(Calendar.DATE)){
+            getStudent();
+            CreateView();
+            check_message.setVisibility(View.VISIBLE);
+            check_date.setVisibility(View.VISIBLE);
+        }
+        String date_file = calcul_cal.get(Calendar.MONTH)+""+ calcul_cal.get(Calendar.DATE) +".txt";
+        read_memo(date_file);
+    }
 
+    //이전 달 버튼 눌렀을 때
+    public void preday(View view) {
+        calcul_cal.add(Calendar.DATE, -1);
+        today_date_text.setText(" " + (calcul_cal.get(Calendar.MONTH)+1) + "월 " + calcul_cal.get(Calendar.DATE) + "일 출석");
+        if((calcul_cal.get(Calendar.MONTH)+1)!=(cal.get(Calendar.MONTH)+1)||calcul_cal.get(Calendar.DATE)!=cal.get(Calendar.DATE)){
+            getStudent();
+            CreatenView();
+            check_message.setVisibility(View.GONE);
+            check_date.setVisibility(View.GONE);
+        }
+        if((calcul_cal.get(Calendar.MONTH)+1)==(cal.get(Calendar.MONTH)+1)&&calcul_cal.get(Calendar.DATE)==cal.get(Calendar.DATE)){
+            getStudent();
+            CreateView();
+            check_message.setVisibility(View.VISIBLE);
+            check_date.setVisibility(View.VISIBLE);
+        }
+        String date_file = calcul_cal.get(Calendar.MONTH)+""+ calcul_cal.get(Calendar.DATE) +".txt";
+        read_memo(date_file);
+    }
+
+    private void read_memo(String name) {
+
+
+        // 파일 이름 만들기
+        file = calcul_cal.get(Calendar.MONTH)+""+ calcul_cal.get(Calendar.DATE) +".txt";
+
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(file);
+
+            byte[] fileData = new byte[fis.available()];
+            fis.read(fileData);
+            fis.close();
+
+            String str = new String(fileData);
+            edit_memo.setText(str);
+        } catch (Exception e) { // UnsupportedEncodingException , FileNotFoundException , IOException
+            edit_memo.setText("");
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @SuppressLint("WrongConstant")
+    private void add_memo(String readDay) {
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS); //MODE_WORLD_WRITEABLE
+            String content = edit_memo.getText().toString();
+
+            // String.getBytes() = 스트링을 배열형으로 변환?
+            fos.write(content.getBytes());
+            //fos.flush();
+            fos.close();
+
+            // getApplicationContext() = 현재 클래스.this ?
+
+        } catch (Exception e) { // Exception - 에러 종류 제일 상위 // FileNotFoundException , IOException
+            e.printStackTrace();
+        }
+    }
 
 }

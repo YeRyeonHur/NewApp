@@ -23,8 +23,12 @@ import com.example.newapp.listview.MyAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -41,7 +45,11 @@ public class popup_activity extends Activity {
     //정렬
     int[] sort = new int[100];
     String file;
-
+    int cur_year;
+    int cur_month;
+    int cur_date;
+    int year, month, date;
+    String stu_Name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,13 +84,13 @@ public class popup_activity extends Activity {
             });
         }
 
-        String stu_Name = intent.getStringExtra("stu_Name");
+        stu_Name = intent.getStringExtra("stu_Name");
 
         //날짜 선택 팝업인지?
         int isNewDate = intent.getIntExtra("new_date?",0);
-        int cur_year = intent.getIntExtra("cur_year", 0);
-        int cur_month = intent.getIntExtra("cur_month", 0);
-        int cur_date = intent.getIntExtra("cur_date", 0);
+        cur_year = intent.getIntExtra("cur_year", 0);
+        cur_month = intent.getIntExtra("cur_month", 0);
+        cur_date = intent.getIntExtra("cur_date", 0);
 
         //날짜 선택 팝업이면 날짜 선택 보이게 하기
         if(isNewDate==1){
@@ -90,7 +98,11 @@ public class popup_activity extends Activity {
             datePicker.setVisibility(View.VISIBLE);
             newDayMemo.setVisibility(View.VISIBLE);
             date_show.setText(stu_Name);
-            checkmemo(cur_year, cur_month, cur_date,stu_Name);
+            checkmemo(stu_Name);
+             year = datePicker.getYear();
+             month = datePicker.getMonth();
+             date = datePicker.getDayOfMonth();
+            String date_st = String.valueOf(year)+String.valueOf(month)+String.valueOf(date);
 
 
 
@@ -102,8 +114,6 @@ public class popup_activity extends Activity {
 
                 }
             });
-            //test용 없어도됨
-            String new_date = datePicker.getYear() + "/" + datePicker.getMonth() + "/" + datePicker.getDayOfMonth();
 
         }
 
@@ -333,11 +343,11 @@ public class popup_activity extends Activity {
         return;
     }
 
-    private void checkmemo(int year, int monthOfYear, int dayOfMonth, String name) {
+    private void checkmemo(String name) {
 
 
         // 파일 이름 만들기
-        file = year + "" + monthOfYear + "" + dayOfMonth + ""+ name +".txt";
+        file = name +".txt";
 
         FileInputStream fis = null;
         try {
@@ -355,6 +365,7 @@ public class popup_activity extends Activity {
         }
 
     }
+
 
     @SuppressLint("WrongConstant")
     private void saveMemo(String readDay) {
@@ -376,6 +387,12 @@ public class popup_activity extends Activity {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
 
 
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import com.example.newapp.database.Students;
 import com.example.newapp.listview.attenList;
 import com.example.newapp.listview.paymentList;
 import com.example.newapp.listview.studentList;
-import com.example.newapp.sign.login;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

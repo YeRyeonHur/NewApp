@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,6 +37,7 @@
                 android:text="@string/left"
                 android:clickable="true"
                 android:onClick="premon"
+                app:backgroundTint="#EDB335"
                 />
 
               <TextView
@@ -57,6 +58,7 @@
                 android:text="@string/right"
                 android:clickable="true"
                 android:onClick="nextmon"
+                app:backgroundTint="#EDB335"
                 />
 </LinearLayout>
 
@@ -74,7 +76,8 @@
             android:layout_weight="0.5"
             android:clickable="true"
             android:onClick="reset"
-            android:text="리셋" />
+            android:text="리셋"
+            app:backgroundTint="#EDB335"/>
         <Button
             android:id="@+id/save"
             android:layout_width="0dp"
@@ -83,7 +86,8 @@
             android:layout_weight="0.5"
             android:clickable="true"
             android:onClick="save"
-            android:text="저장" />
+            android:text="저장"
+            app:backgroundTint="#EDB335"/>
 
     </LinearLayout>
 
