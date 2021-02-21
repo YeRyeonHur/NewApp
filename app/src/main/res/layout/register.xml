@@ -88,6 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/passwordcheckEdt"
+            app:backgroundTint="#EDB335"
+            app:rippleColor="#EDB335"
             android:layout_centerHorizontal="true"
             android:text="확인" />
 
@@ -103,6 +105,8 @@
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:backgroundTint="#EDB335"
+                app:rippleColor="#EDB335"
                 android:text="취소" />
 
             <Button
@@ -111,6 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
+                app:backgroundTint="#EDB335"
+                app:rippleColor="#EDB335"
                 android:text="가입" />
 
 
