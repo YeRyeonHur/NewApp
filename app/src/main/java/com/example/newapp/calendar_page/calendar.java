@@ -27,6 +27,7 @@ import com.example.newapp.database.Students;
 import com.example.newapp.listview.attenList;
 import com.example.newapp.listview.paymentList;
 import com.example.newapp.listview.studentList;
+import com.example.newapp.sign.setupPage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -465,6 +466,11 @@ public class calendar extends AppCompatActivity {
         startActivity(intent);
 
         //Toast.makeText(getApplicationContext(),nowMonth,Toast.LENGTH_LONG);
+    }
+    //설정 버튼
+    public void goSetUp(View v){
+        Intent intent=new Intent(getApplicationContext(), setupPage.class);
+        startActivity(intent);
     }
 
     //메시지 권한

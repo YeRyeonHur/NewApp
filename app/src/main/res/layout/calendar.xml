@@ -90,6 +90,16 @@
             android:clickable="true"
             android:onClick="payment"
             android:text="결제관리"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp"/>
+
+        <Button android:id="@+id/setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="goSetUp"
+            android:text="설정"/>
 
 
     </LinearLayout>
