@@ -1,9 +1,9 @@
 package com.example.newapp.sign;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,10 +30,14 @@ public class login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     String Id, Pass;
     CheckBox autoLogin;
+
+    public static Context login_context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        login_context=getApplicationContext();
 
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
@@ -135,4 +139,8 @@ public class login extends AppCompatActivity {
         return true;
     }
 
+
+    public static Context getContext(){
+        return login_context;
+    }
 }

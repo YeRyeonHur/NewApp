@@ -27,7 +27,7 @@ import com.example.newapp.database.Students;
 import com.example.newapp.listview.attenList;
 import com.example.newapp.listview.paymentList;
 import com.example.newapp.listview.studentList;
-import com.example.newapp.sign.setupPage;
+import com.example.newapp.sign.SetUp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -469,7 +469,7 @@ public class calendar extends AppCompatActivity {
     }
     //설정 버튼
     public void goSetUp(View v){
-        Intent intent=new Intent(getApplicationContext(), setupPage.class);
+        Intent intent=new Intent(getApplicationContext(), SetUp.class);
         startActivity(intent);
     }
 
