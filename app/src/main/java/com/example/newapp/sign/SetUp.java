@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,8 @@ import com.example.newapp.database.PreferenceManager;
 import com.example.newapp.info.add_std;
 import com.example.newapp.listview.studentList;
 import com.example.newapp.sign.login;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,7 +27,7 @@ public class SetUp extends AppCompatActivity {
 
 
     private Button logout_btn;
-
+    private Button withdrawal_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,7 @@ public class SetUp extends AppCompatActivity {
 
         // 여기부터 id 등록해주세요
         logout_btn=findViewById(R.id.logout);
-
+        withdrawal_btn= findViewById(R.id.withdrawal);
         btn_clicked(); //버튼 눌렀을 때 리스너 등록하는 메소드, (다른 버튼들도 여기에다 넣어주세요)
     }
 
@@ -54,6 +57,39 @@ public class SetUp extends AppCompatActivity {
                 }
             }
         });
+        withdrawal_btn.setOnClickListener(new View.OnClickListener() {
+            private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(SetUp.this);
+                alert_confirm.setTitle("알림")
+                        .setMessage("계정을 삭제 하시겠습니까?").setCancelable(false).setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                user.delete()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(SetUp.this, "계정이 삭제 되었습니다.", Toast.LENGTH_LONG).show();
+                                                finish();
+                                                startActivity(new Intent(getApplicationContext(), login.class));
+                                            }
+                                        });
+                            }
+                        }
+                );
+                alert_confirm.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert_confirm.show();
+
+            }
+        });
+
     }
     private void showDialog(FirebaseAuth firebaseAuth){
         AlertDialog.Builder builder=new AlertDialog.Builder(SetUp.this);
