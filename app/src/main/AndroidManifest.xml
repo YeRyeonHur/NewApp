@@ -29,7 +29,7 @@
         <activity android:name="com.example.newapp.listview.studentList"></activity>
         <activity android:name="com.example.newapp.listview.attenList"></activity>
         <activity android:name="com.example.newapp.listview.paymentList"></activity>
-
+        <activity android:name="com.example.newapp.explain.explain_main"></activity>
         <activity android:name="com.example.newapp.info.add_std"></activity>
         <activity android:name=".MainActivity"></activity>
     </application>

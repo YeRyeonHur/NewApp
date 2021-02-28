@@ -90,7 +90,6 @@ public class calendar extends AppCompatActivity {
         tvDate = (TextView)findViewById(R.id.tv_date);
         gridView = (GridView)findViewById(R.id.gridview);
 
-
         att_btn=(Button)findViewById(R.id.attend_btn);
 
         ImageView iv_last =  (ImageView)findViewById(R.id.iv_lastmonth);

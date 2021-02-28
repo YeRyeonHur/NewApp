@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newapp.R;
 import com.example.newapp.database.PreferenceManager;
+import com.example.newapp.explain.explain_main;
 import com.example.newapp.info.add_std;
 import com.example.newapp.listview.studentList;
 import com.example.newapp.sign.login;
@@ -28,6 +29,7 @@ public class SetUp extends AppCompatActivity {
 
     private Button logout_btn;
     private Button withdrawal_btn;
+    private Button appinfo_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,16 @@ public class SetUp extends AppCompatActivity {
         // 여기부터 id 등록해주세요
         logout_btn=findViewById(R.id.logout);
         withdrawal_btn= findViewById(R.id.withdrawal);
+        appinfo_btn=findViewById(R.id.app_info);
         btn_clicked(); //버튼 눌렀을 때 리스너 등록하는 메소드, (다른 버튼들도 여기에다 넣어주세요)
+
+        appinfo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), explain_main.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -126,4 +137,6 @@ public class SetUp extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+
 }

@@ -31,7 +31,7 @@
             android:layout_weight="4"
             android:gravity="center"
             android:text="출석 체크"
-            android:textSize="35dp" />
+            android:textSize="30dp" />
 
         <Button
             android:id="@+id/next_month"
@@ -82,6 +82,11 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,6 +129,10 @@
             android:scaleType="centerInside" />
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
 
     <LinearLayout
         android:layout_width="match_parent"
