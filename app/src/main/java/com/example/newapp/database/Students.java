@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 public class Students extends RealmObject implements Serializable {
     private int std_id;
     private String name, phone;
-    private int date;
+    private int date, money;
     private int mon, tue, wed, thu, fri, sat, sun;
     private int age;
     private String par_name, par_phone;
@@ -69,6 +69,7 @@ public class Students extends RealmObject implements Serializable {
     public boolean getAttendchk() {return attendchk;}
     public boolean getAttended() {return attended;}
     public boolean getAddattended(){return addattend;}
+    public int getMoney(){return money;}
 
     public String getInfo(){
 
@@ -128,6 +129,7 @@ public class Students extends RealmObject implements Serializable {
     public void setoct(int n){this.oct = n;}
     public void setnov(int n){this.nov = n;}
     public void setdec(int n){this.dec = n;}
+    public void setMoney(int n){this.money = n;}
     }
 
 

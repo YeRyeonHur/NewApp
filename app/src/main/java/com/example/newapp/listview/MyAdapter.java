@@ -119,6 +119,7 @@ public class MyAdapter extends BaseAdapter{
         TextView dateText;
         TextView timeText;
         TextView idText;
+        TextView moneyText;
         ImageButton sendBtn;
 
         // position에 위치한 데이터 참조 획득
@@ -272,8 +273,10 @@ public class MyAdapter extends BaseAdapter{
             nameText.setText(students.getName());
             CheckBox paycheck = convertView.findViewById(R.id.payment_checkBox);
             TextView pay_date = convertView.findViewById(R.id.pay_day);
+            moneyText = convertView.findViewById(R.id.pay_money);
             idText = convertView.findViewById(R.id.attend_std_id);
             sendBtn = convertView.findViewById(R.id.payment_send_message);
+            moneyText.setText(students.getMoney()+" 원");
             idText.setText(students.getStd_id() + "");
 
             if(!paycheck.isChecked()){

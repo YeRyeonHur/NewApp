@@ -245,6 +245,9 @@ public class add_std extends AppCompatActivity {
         //메모
         tv = findViewById(R.id.add_memo);
         memo = tv.getText().toString();
+        //돈
+        tv = findViewById(R.id.pay_amount);
+        int money = Integer.parseInt(tv.getText().toString());
 
         //저장
         Students students = new Students();
@@ -263,6 +266,7 @@ public class add_std extends AppCompatActivity {
             students.setDate(pay_date);
             students.setParent(par_name, par_phone);
             students.setMemo(memo);
+            students.setMoney(money);
 
             int id = PreferenceManager.getInt(this, "std_id");
             students.setStd_id(id);
