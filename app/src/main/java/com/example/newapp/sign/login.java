@@ -78,7 +78,10 @@ public class login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ProgressDialog dialog = new ProgressDialog(login.this);
+                dialog.setMessage("로그인 중...");
+                dialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+                dialog.show();
                 if(check()==true){
                 firebaseAuth.signInWithEmailAndPassword(Id, Pass).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -89,7 +92,7 @@ public class login extends AppCompatActivity {
                                 PreferenceManager.setString(login.this, "user_pw", Pass);
                                 PreferenceManager.setBoolean(login.this, "auto_login", true);
                             }
-
+                            dialog.dismiss();
                             Intent intent = new Intent(login.this, calendar.class);
                             startActivity(intent);
                             finish();
@@ -98,6 +101,7 @@ public class login extends AppCompatActivity {
                         }
                     }
                 });
+                dialog.dismiss();
             }
             }
 
