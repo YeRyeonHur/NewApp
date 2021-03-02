@@ -83,7 +83,7 @@ public class Students extends RealmObject implements Serializable {
         if(sun!=-1) day=day+", 일요일 "+sun/100+"시 "+sat%100+"분 ";
 
         String stu="";
-        stu=stu+"이름: "+name+'\n'+"나이: "+age+'\n'+"전화: "+phone+'\n'+"등원 시간: "+day+'\n'+"결제 날짜: 매달 "+date+"일"+'\n'+'\n'
+        stu=stu+"이름: "+name+'\n'+"나이: "+age+'\n'+"전화: "+phone+'\n'+"등원 시간: "+day+'\n'+"결제 날짜/금액: 매달 "+date+"일/"+money+"원"+'\n'+'\n'
                 +"학부모 이름: "+par_name+'\n'+"학부모 전화: "+par_phone+'\n'+"메모: "+memo+'\n';
 
         return stu;
