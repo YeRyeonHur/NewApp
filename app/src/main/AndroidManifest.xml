@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.newapp">
+    package="com.example.A_manager">
 
     "<uses-permission android:name="android.permission.SEND_SMS" />"
 
     <application
-        android:name=".MyApplication"
+        android:name="com.example.A_manager.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name="com.example.newapp.sign.login">
+        android:theme="@style/Theme.NewApp">
+        <activity android:name="com.example.A_manager.sign.login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.newapp.sign.find_id"></activity>
-        <activity android:name="com.example.newapp.sign.Register"></activity>
-        <activity android:name="com.example.newapp.sign.SetUp"></activity>
+        <activity android:name="com.example.A_manager.sign.find_id"></activity>
+        <activity android:name="com.example.A_manager.sign.Register"></activity>
+        <activity android:name="com.example.A_manager.sign.SetUp"></activity>
 
-        <activity android:name="com.example.newapp.calendar_page.popup_activity" android:theme="@android:style/Theme.Dialog" />
-        <activity android:name="com.example.newapp.calendar_page.calendar"></activity>
+        <activity android:name="com.example.A_manager.calendar_page.popup_activity" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name="com.example.A_manager.calendar_page.calendar"></activity>
 
-        <activity android:name="com.example.newapp.listview.studentList"></activity>
-        <activity android:name="com.example.newapp.listview.attenList"></activity>
-        <activity android:name="com.example.newapp.listview.paymentList"></activity>
-        <activity android:name="com.example.newapp.explain.explain_main"></activity>
-        <activity android:name="com.example.newapp.info.add_std"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name="com.example.A_manager.listview.studentList"></activity>
+        <activity android:name="com.example.A_manager.listview.attenList"></activity>
+        <activity android:name="com.example.A_manager.listview.paymentList"></activity>
+        <activity android:name="com.example.A_manager.explain.explain_main"></activity>
+        <activity android:name="com.example.A_manager.info.add_std"></activity>
+        <activity android:name="com.example.A_manager.MainActivity"></activity>
     </application>
 
 </manifest>
