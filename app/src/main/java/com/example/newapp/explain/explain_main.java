@@ -25,7 +25,7 @@ public class explain_main extends FragmentActivity {
         vp.setAdapter(adapter);
         vp.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         vp.setCurrentItem(0);
-        vp.setOffscreenPageLimit(3);
+        vp.setOffscreenPageLimit(4);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter{
@@ -35,15 +35,16 @@ public class explain_main extends FragmentActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            int index = position % 3;
+            int index = position % 4;
             if(index == 0) return new explain_page1();
             else if(index == 1) return new explain_page2();
-            else return new explain_page3();
+            else if(index == 2) return new explain_page3();
+            else return new explain_page4();
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 }
