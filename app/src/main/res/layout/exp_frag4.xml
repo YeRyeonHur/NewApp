@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:textSize="20dp"
-        android:text="앱 제작 : 모바일공학과\n박은화 성자민 이시언 허예련\n아이콘 출처 : FlatIcon\n(https://www.flaticon.com/)"
+        android:text="앱 제작 : 모바일공학과\n박은화 성자민 이시언 허예련\n아이콘 출처 : FlatIcon\n(https://www.flaticon.com/)\n로고 폰트 : Daum Regular"
         android:gravity="center"/>
 
     <ImageView
