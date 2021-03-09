@@ -117,6 +117,7 @@ public class SetUp extends AppCompatActivity {
                 else {
                     auto_login_now = "자동 로그인 미설정";
                 }
+                auto_login_sw.setChecked(PreferenceManager.getBoolean(SetUp.this, "auto_login"));
                 auto_login_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -136,23 +137,13 @@ public class SetUp extends AppCompatActivity {
                         //.setView(auto_login_view)
                         .setMessage("현재 "+auto_login_now)
                         .setView(auto_login_sw)
-                        .setPositiveButton("설정",
+                        .setPositiveButton("저장",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        /*if(check_auto) {
-                                            PreferenceManager.setBoolean(login_context, "auto_login", false);
-                                        }
-                                        firebaseAuth.signOut();
-                                        finish();
-
-                                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(),login.class));*/
                                     }
-                                });
-
-                alert_login.show();
+                                }).show();
 
             }
         });
