@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ public class SetUp extends AppCompatActivity {
     private Button logout_btn;
     private Button withdrawal_btn;
     private Button appinfo_btn;
+    private Button auto_login_setup_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,8 @@ public class SetUp extends AppCompatActivity {
         logout_btn=findViewById(R.id.logout);
         withdrawal_btn= findViewById(R.id.withdrawal);
         appinfo_btn=findViewById(R.id.app_info);
+        auto_login_setup_btn=findViewById(R.id.auto_login_setup);
+
         btn_clicked(); //버튼 눌렀을 때 리스너 등록하는 메소드, (다른 버튼들도 여기에다 넣어주세요)
 
         appinfo_btn.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +101,61 @@ public class SetUp extends AppCompatActivity {
 
             }
         });
+        auto_login_setup_btn.setOnClickListener(new View.OnClickListener() {
+            private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+            Context login_context=login.getContext();
+            boolean check_auto = PreferenceManager.getBoolean(login_context, "auto_login");
+            String auto_login_now = "";
+            @Override
+            public void onClick(View v) {
+                final Switch auto_login_sw = new Switch(getApplicationContext());
+                AlertDialog.Builder alert_login=new AlertDialog.Builder(SetUp.this);
+                //View auto_login_view = getLayoutInflater().inflate(R.layout.popup_auto_login,null);
+                if(check_auto){
+                    auto_login_now = "자동 로그인 설정";
+                }
+                else {
+                    auto_login_now = "자동 로그인 미설정";
+                }
+                auto_login_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(!isChecked){
+                            Toast.makeText(getApplicationContext(),"자동로그인 미설정",Toast.LENGTH_LONG).show();
+                            PreferenceManager.setBoolean(login_context, "auto_login", false);
+                        }
+                        else if(isChecked){
+                            Toast.makeText(getApplicationContext(),"자동로그인 설정",Toast.LENGTH_LONG).show();
+                            PreferenceManager.setBoolean(login_context, "auto_login", true);
+                        }
+                    }
+                });
 
+
+                alert_login.setTitle("자동로그인 설정")
+                        //.setView(auto_login_view)
+                        .setMessage("현재 "+auto_login_now)
+                        .setView(auto_login_sw)
+                        .setPositiveButton("설정",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        /*if(check_auto) {
+                                            PreferenceManager.setBoolean(login_context, "auto_login", false);
+                                        }
+                                        firebaseAuth.signOut();
+                                        finish();
+
+                                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(),login.class));*/
+                                    }
+                                });
+
+                alert_login.show();
+
+            }
+        });
     }
     private void showDialog(FirebaseAuth firebaseAuth){
         AlertDialog.Builder builder=new AlertDialog.Builder(SetUp.this);
@@ -134,5 +193,14 @@ public class SetUp extends AppCompatActivity {
 
     }
 
+    class visibilitySwitchListener implements CompoundButton.OnCheckedChangeListener{
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked){
+
+            }
+        }
+    }
 
 }
