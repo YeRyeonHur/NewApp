@@ -3,6 +3,8 @@ package com.example.A_manager.listview;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.telephony.SmsManager;
 import android.text.InputFilter;
 import android.util.Log;
@@ -224,31 +226,23 @@ public class MyAdapter extends BaseAdapter{
                         Toast.makeText((attenList) context, "전화번호 정보가 없습니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    AlertDialog.Builder clsBuilder = new AlertDialog.Builder((attenList) context );
-                    clsBuilder.setTitle( "메시지를 전송합니다." );
-                    EditText message = new EditText((attenList)context);
-                    message.setFilters(new InputFilter[]{new InputFilter.LengthFilter((70))});
-                    Boolean who = false;
-                    if(students.getPar_phone().length()>0){
-                        clsBuilder.setMessage("학부모 P. " + students.getPar_phone());
-                        who = false;
+                    String PhoneNo = "sms:";
+                    String who = null;
+                    if(students.getPar_phone().length() > 0){
+                        PhoneNo += students.getPar_phone().replace("-", "") + ";";
+                        who = "학부모님";
                     }
-                    else{
-                        clsBuilder.setMessage("학생 P. " + students.getPhone());
-                        who = true;
+                    else if(students.getPhone().length() > 0){
+                        PhoneNo += students.getPhone().replace("-", "") + ";";
+                        who = "학생";
                     }
-                    message.setText(students.getName() + " 학생이 아직 등원하지 않았습니다. 확인 부탁 드립니다.");
-                    clsBuilder.setView( message);
-                    Boolean finalWho = who;
-                    clsBuilder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                           // Toast.makeText((attenList) context, message.getText().toString(), Toast.LENGTH_SHORT).show();
-                            send_message(students, message.getText().toString(), finalWho);Toast.makeText((attenList) context, "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    clsBuilder.setNegativeButton("취소", null);
-                    clsBuilder.show();
+
+                    Toast.makeText((attenList) context, who + " 전화번호로 문자를 전송합니다.", Toast.LENGTH_SHORT).show();
+
+                    Uri smsUri = Uri.parse(PhoneNo);
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, smsUri);
+                    intent.putExtra("sms_body", students.getName() + " 학생이 등원하지 않았습니다. 확인 부탁 드립니다.");
+                    context.startActivity(intent);
                 }
             });
         }
@@ -270,6 +264,7 @@ public class MyAdapter extends BaseAdapter{
                     @Override
                     public void onClick(View v) {
                         //if(students.getPaymentchk() == true) return;
+                        /*
                         if(students.getPhone().length() == 0 && students.getPar_phone().length() == 0){
                             Toast.makeText((paymentList) context, "전화번호 정보가 없습니다.", Toast.LENGTH_SHORT).show();
                             return;
@@ -299,6 +294,29 @@ public class MyAdapter extends BaseAdapter{
                         });
                         clsBuilder.setNegativeButton("취소", null);
                         clsBuilder.show();
+                        */
+                        if(students.getAttended() == true) return;
+                        if(students.getPhone().length() == 0 && students.getPar_phone().length() == 0){
+                            Toast.makeText((attenList) context, "전화번호 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        String PhoneNo = "sms:";
+                        String who = null;
+                        if(students.getPar_phone().length() > 0){
+                            PhoneNo += students.getPar_phone().replace("-", "") + ";";
+                            who = "학부모님";
+                        }
+                        else if(students.getPhone().length() > 0){
+                            PhoneNo += students.getPhone().replace("-", "") + ";";
+                            who = "학생";
+                        }
+
+                        Toast.makeText(context, who + " 전화번호로 문자를 전송합니다.", Toast.LENGTH_SHORT).show();
+
+                        Uri smsUri = Uri.parse(PhoneNo);
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, smsUri);
+                        intent.putExtra("sms_body", students.getName() + " 학생 "+showmonth+"월 결제되지 않았습니다."+" 확인 부탁 드립니다.");
+                        context.startActivity(intent);
                     }
                 });
             }

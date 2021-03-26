@@ -75,13 +75,11 @@ public class calendar extends AppCompatActivity {
     private Button att_btn;
     private Button list_btn;
 
-    final int MY_PERMISSION_SEND_MESSAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
-        checkPermission_SMS();
 
         tvDate = (TextView)findViewById(R.id.tv_date);
         gridView = (GridView)findViewById(R.id.gridview);
@@ -466,19 +464,6 @@ public class calendar extends AppCompatActivity {
     public void goSetUp(View v){
         Intent intent=new Intent(getApplicationContext(), SetUp.class);
         startActivity(intent);
-    }
-
-    //메시지 권한
-    public void checkPermission_SMS(){
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_SEND_MESSAGE);
-            }
-            else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_SEND_MESSAGE);
-            }
-        }
     }
 
 }

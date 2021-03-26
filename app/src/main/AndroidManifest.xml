@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.A_manager">
 
-    "<uses-permission android:name="android.permission.SEND_SMS" />"
-
     <application
         android:name="com.example.A_manager.MyApplication"
         android:allowBackup="true"

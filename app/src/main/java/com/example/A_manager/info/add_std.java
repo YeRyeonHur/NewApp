@@ -25,11 +25,11 @@ public class add_std extends AppCompatActivity {
 
     private EditText std_phone, par_phone;
     private EditText std_name,std_age, payDate, par_name, memo;
-    private TextView day0,day1,day2,day3,day4,day5,day6;
+    private TextView day0,day1,day2,day3,day4,day5,day6, addtv;
     private boolean Flag=false;
     private  Intent intent;
     private Students getstudent;
-    private Button back_but;
+    private Button back_but, add_but;
     Realm realm;
 
 
@@ -58,9 +58,13 @@ public class add_std extends AppCompatActivity {
 
         Flag=false;
 
+        add_but = findViewById(R.id.std_add_But);
+        addtv = findViewById(R.id.tv_add_std);
         intent=getIntent();
         getstudent= (Students) intent.getSerializableExtra("Student");
         if(getstudent!=null){
+            add_but.setText("수정");
+            addtv.setText("학생 정보 수정");
             preWrite(getstudent);
             Flag=true;
         }
@@ -96,7 +100,9 @@ public class add_std extends AppCompatActivity {
         std_phone.setText(student.getPhone());
         par_name.setText(student.getPar_name());
         par_phone.setText(student.getPar_phone());
-        payDate.setText(Integer.toString(student.getDate()));
+        if(student.getDate() > 0){
+            payDate.setText(Integer.toString(student.getDate()));
+        }
         memo.setText(student.getMemo());
 
         int mon=student.getMon();
@@ -233,7 +239,10 @@ public class add_std extends AppCompatActivity {
         memo = tv.getText().toString();
         //돈
         tv = findViewById(R.id.pay_amount);
-        int money = Integer.parseInt(tv.getText().toString());
+        int money = 0;
+        if(tv.getText().toString().length() > 0){
+            money = Integer.parseInt(tv.getText().toString());
+        }
 
         //저장
         Students students = new Students();
